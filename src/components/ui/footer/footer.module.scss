@@ -1,0 +1,39 @@
+.footer {
+	margin-top: 100px;
+	background: #5d6eff;
+	border-radius: 25px 25px 0px 0px;
+	padding: 50px 0;
+	.footer_wrp {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+.nav_links {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+	text-decoration: none;
+	list-style-type: none;
+	a {
+		text-decoration: none;
+		font-style: normal;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 22px;
+		color: #ffffff;
+		transition: all 0.4s ease-in-out;
+	}
+	:hover {
+		font-weight: 600;
+	}
+}
+.info_autor {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 22px;
+	text-align: center;
+	width: 233px;
+	color: #ffffff;
+}
