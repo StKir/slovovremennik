@@ -1,4 +1,4 @@
-import MainLayout from '@/components/layout/mainLayout';
+import MainLayout from '@/components/layout/MainLayout';
 import { NextPage } from 'next';
 import React from 'react';
 
