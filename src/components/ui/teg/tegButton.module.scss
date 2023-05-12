@@ -1,0 +1,20 @@
+.teg {
+  padding: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 110.5%;
+  color: #ffffff;
+
+  cursor: pointer;
+  width: fit-content;
+
+  border-radius: 49px;
+
+  &.blue {
+    background-color: #5e6eff;
+  }
+  &.pink {
+    background-color: #9c2dcd;
+  }
+}
