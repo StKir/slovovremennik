@@ -2,21 +2,28 @@ import styles from './dayWord.module.scss';
 
 const DayWord = () => {
   return (
-    <div>
-      <h3>Слово дня</h3>
+    <div className={styles.container}>
+      <h3 className={styles.name_page}>Слово дня</h3>
       <div>
-        <h2>Килиманджарит</h2>
-        <p>Состоянии безумной эйфории, неописуемого кайфа</p>
+        <h2 className={styles.main_title}>Килиманджарит</h2>
+        <p className={styles.main_direction}>
+          Состоянии безумной эйфории, неописуемого кайфа
+        </p>
       </div>
       <div>
-        <ul>
-          <li>
-            <h4>Часть речи</h4>
-          </li>
-          <li>
-            <h4>Теги</h4>
-          </li>
-        </ul>
+        <div className={styles.info_section}>
+          <ul className={styles.list_info}>
+            <li className={styles.item_info}>
+              <h4>Часть речи</h4>
+              <p>Прилагательное</p>
+            </li>
+            <li className={styles.item_info}>
+              <h4>Теги</h4>
+              <div></div>
+            </li>
+          </ul>
+        </div>
+
         <ul>
           <li>
             <p>

@@ -1,0 +1,47 @@
+@import './../../../styles/variable';
+
+.container {
+  @extend %container;
+
+  .name_page {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 110.5%;
+    color: #ffffff;
+  }
+
+  .main_title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 157px;
+    color: #ffffff;
+  }
+
+  .main_direction {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #ffffff;
+  }
+
+  .list_info {
+    ul,
+    li {
+      list-style: none;
+    }
+  }
+
+  .item_info {
+    h4 {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 110.5%;
+      color: #aeaeae;
+    }
+  }
+}
