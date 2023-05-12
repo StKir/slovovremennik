@@ -66,7 +66,7 @@ export const FormModalsAuth: React.FC = () => {
 export const FormModalsReg: React.FC = () => {
   return (
     <div className={styles.modal}>
-      <h2>Регистрация</h2>
+      <h2 className={styles.title}>Регистрация</h2>
       <FormComponent>
         <InputsComponentsForForm
           dataForRender={valuesForReg}
