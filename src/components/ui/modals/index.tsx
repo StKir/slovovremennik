@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import MainButton from '../buttons/mainButton/MainButton';
 import MainInput from '../input/mainInput';
-import { valuesForAuth } from './constant';
+import { valuesForAuth, valuesForReg } from './constant';
 import styles from './modals.module.scss';
 import { IFormComponent, IInputsComponentsForForm } from './types';
 
@@ -16,13 +16,23 @@ const InputsComponentsForForm: React.FC<IInputsComponentsForForm> = ({
   return (
     <>
       {dataForRender.map((el) => (
-        <div className={styles.input_container} key={el.title}>
+        <div
+          className={styles.input_container}
+          key={el.title}
+        >
           <h3 className={styles.subtitle}>{el.title}</h3>
-          <MainInput name={el.name} type={el.type} />
+          <MainInput
+            name={el.name}
+            type={el.type}
+          />
         </div>
       ))}
       <div className={styles.btn_container}>
-        <MainButton size="small" onClick={() => {}} type="submit">
+        <MainButton
+          size="small"
+          onClick={() => {}}
+          type="submit"
+        >
           {textFromBtn}
         </MainButton>
       </div>
@@ -35,11 +45,17 @@ export const FormModalsAuth: React.FC = () => {
     <div className={styles.modal}>
       <h2 className={styles.title}>Войти</h2>
       <FormComponent>
-        <InputsComponentsForForm dataForRender={valuesForAuth} textFromBtn="Вход" />
+        <InputsComponentsForForm
+          dataForRender={valuesForAuth}
+          textFromBtn="Вход"
+        />
       </FormComponent>
       <div className={styles.footer_modal}>
         Нет акаунта?
-        <button className={styles.footer_btn} type="button">
+        <button
+          className={styles.footer_btn}
+          type="button"
+        >
           Зарегистрируйтесь
         </button>
       </div>
@@ -51,9 +67,18 @@ export const FormModalsReg: React.FC = () => {
   return (
     <div className={styles.modal}>
       <h2>Регистрация</h2>
+      <FormComponent>
+        <InputsComponentsForForm
+          dataForRender={valuesForReg}
+          textFromBtn="Зарегистрироваться"
+        />
+      </FormComponent>
       <div className={styles.footer_modal}>
         Есть аккаунт?
-        <button className={styles.footer_btn} type="button">
+        <button
+          className={styles.footer_btn}
+          type="button"
+        >
           Войти
         </button>
       </div>
