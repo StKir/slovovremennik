@@ -9,4 +9,5 @@ interface IMainInput
 const MainInput: React.FC<IMainInput> = ({ ...props }) => {
 	return <input className={styles.input} {...props} />;
 };
+
 export default MainInput;
