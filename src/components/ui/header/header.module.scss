@@ -4,6 +4,10 @@
 	.nav_wrapper {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
+		.mobile_menu {
+			display: none;
+		}
 		.nav_links {
 			display: flex;
 			gap: 30px;
@@ -24,7 +28,39 @@
 				font-weight: 600;
 			}
 		}
+		@media screen and (max-width: 1200px) {
+			.nav_links {
+				gap: 15px;
+				a {
+					font-size: 16px;
+					line-height: 20px;
+				}
+			}
+			.logo {
+				width: 243px;
+				height: 33px;
+			}
+		}
+		@media screen and (max-width: 768px) {
+			.nav_links {
+				display: none;
+			}
+			.sign_in {
+				display: none;
+			}
+			.mobile_menu {
+				display: block;
+				padding: 13px 10px;
+				background: rgba(0, 0, 0, 0.5);
+				border-radius: 9px;
+			}
+			.logo {
+				width: 213px;
+				height: 29px;
+			}
+		}
 	}
+
 	.sign_in {
 		padding: 10px 20px;
 		background: rgba(0, 0, 0, 0.5);
@@ -47,4 +83,27 @@
 	background-color: rgba(225, 225, 225, 0.5);
 	padding: 5px 10px;
 	border-radius: 25px;
+}
+
+.mobile_navBar {
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(6px);
+	border-radius: 8px;
+	padding: 20px 30px;
+	position: absolute;
+	width: inherit;
+	.nav_links {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 15px;
+		list-style-type: none;
+	}
+	li {
+		a {
+			color: #ffffff;
+			text-decoration: none;
+		}
+	}
 }

@@ -9,6 +9,7 @@ import styles from './dayWord.module.scss';
 import clsx from 'clsx';
 
 const DayWord = () => {
+
   return (
     <div className={styles.container}>
       <h3 className={styles.name_page}>Слово дня</h3>
@@ -70,6 +71,8 @@ const DayWord = () => {
       </div>
     </div>
   );
+  return <div>word</div>;
+
 };
 
 export default DayWord;
