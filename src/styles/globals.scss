@@ -36,3 +36,23 @@ h2 {
 	line-height: 49px;
 	color: #ffffff;
 }
+
+@media screen and (max-width: 1200px) {
+	.container {
+		width: 720px;
+		margin: 0 auto;
+	}
+	section {
+		margin-bottom: 70px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		width: 290px;
+		margin: 0 auto;
+	}
+	section {
+		margin-bottom: 40px;
+	}
+}
