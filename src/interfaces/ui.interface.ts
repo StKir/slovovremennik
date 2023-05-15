@@ -29,7 +29,7 @@ export interface IMainSelect
 	options: Toptions[];
 }
 
-type Toptions = {
+export type Toptions = {
 	value: string;
 	label: string;
 };

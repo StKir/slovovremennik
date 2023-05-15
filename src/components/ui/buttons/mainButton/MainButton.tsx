@@ -1,9 +1,9 @@
-import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import styles from './mainButton.module.scss';
 import { MotionProps, motion } from 'framer-motion';
 import { IBtnProps } from '@/interfaces/ui.interface';
 
-const MainButton: FC<
+const MainButton: React.FC<
 	IBtnProps & MotionProps & ButtonHTMLAttributes<HTMLButtonElement>
 > = (props) => {
 	return (
