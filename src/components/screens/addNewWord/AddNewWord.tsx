@@ -10,6 +10,8 @@ type Inputs = {
 	word: string;
 	description: string;
 	speech: string;
+	example: string;
+	teg: string;
 };
 
 const AddNewWord = () => {
@@ -96,6 +98,52 @@ const AddNewWord = () => {
 											name={field.name}
 											onChange={field.onChange}
 											options={partSpech}
+										/>
+									)}
+								/>
+							</label>
+							<label className={styles.form_label} htmlFor='teg'>
+								<span>Теги</span>
+								<span className={styles.error}>{errors.teg?.message}</span>
+								<Controller
+									name='teg'
+									control={control}
+									rules={{
+										required: 'Обязательно',
+										minLength: {
+											value: 2,
+											message: 'Минимум 2 символа'
+										}
+									}}
+									defaultValue=''
+									render={({ field }) => (
+										<MainInput
+											placeholder='Введие теги через запятую'
+											name={field.name}
+											onChange={field.onChange}
+										/>
+									)}
+								/>
+							</label>
+							<label className={styles.form_label} htmlFor='example'>
+								<span>Пример</span>
+								<span className={styles.error}>{errors.example?.message}</span>
+								<Controller
+									name='example'
+									control={control}
+									rules={{
+										required: 'Обязательно',
+										minLength: {
+											value: 2,
+											message: 'Минимум 2 символа'
+										}
+									}}
+									defaultValue=''
+									render={({ field }) => (
+										<MainInput
+											placeholder='Введие пример'
+											name={field.name}
+											onChange={field.onChange}
 										/>
 									)}
 								/>

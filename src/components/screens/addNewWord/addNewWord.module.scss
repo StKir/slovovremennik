@@ -3,6 +3,7 @@
 	.from_wrp {
 		display: flex;
 		justify-content: space-between;
+		align-items: baseline;
 		gap: 20px;
 		&_left {
 			display: grid;
@@ -10,8 +11,8 @@
 			width: 100%;
 		}
 		&_rigth {
-			width: 376px;
 			display: grid;
+			width: 376px;
 			gap: 20px;
 		}
 	}
