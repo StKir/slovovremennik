@@ -17,6 +17,15 @@
 
   .input_container {
     margin-bottom: 15px;
+    span {
+      margin: 10px 0px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      margin-left: 15px;
+      color: #ffffff;
+      display: block;
+    }
   }
 
   .btn_container {
@@ -46,6 +55,7 @@
       border: none;
       text-decoration: underline;
       color: #ffffff;
+      margin-left: 4px;
     }
   }
 
