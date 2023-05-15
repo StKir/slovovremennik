@@ -1,0 +1,28 @@
+.add_word_form {
+	margin-top: 35px;
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	.form_label {
+		span {
+			font-style: normal;
+			font-weight: 500;
+			font-size: 20px;
+			margin-left: 15px;
+			color: #ffffff;
+			display: block;
+		}
+		input,
+		textarea {
+			margin-top: 10px;
+			resize: none;
+			width: 100%;
+		}
+	}
+	.form_left {
+		width: 100%;
+	}
+	.form_rigth {
+		width: 376px;
+	}
+}

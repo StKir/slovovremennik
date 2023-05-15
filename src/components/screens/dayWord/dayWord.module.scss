@@ -1,0 +1,136 @@
+@import './../../../styles/variable';
+
+.container {
+  @extend %container;
+
+  .name_page {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 110.5%;
+    color: #ffffff;
+  }
+
+  .main_title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 157px;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .main_direction {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #ffffff;
+  }
+
+  .info_content {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 771px;
+    gap: 0px 202px;
+
+    .info_section {
+      .list_info {
+        ul,
+        li {
+          list-style: none;
+        }
+      }
+      .info_author {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 110.5%;
+        color: #ffffff;
+        margin-top: 20px;
+      }
+
+      .item_info {
+        h4 {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 110.5%;
+          color: #aeaeae;
+          margin-bottom: 15px;
+        }
+        p {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 110.5%;
+          color: #ffffff;
+          margin-bottom: 20px;
+          color: #ffffff;
+        }
+
+        .tegs_content {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px 20px;
+        }
+      }
+
+      .likes_func {
+        margin-top: 20px;
+        display: flex;
+        width: fit-content;
+        justify-items: center;
+        padding: 5px;
+
+        background: rgba(0, 0, 0, 0.19);
+        backdrop-filter: blur(7.5px);
+        border-radius: 7px;
+
+        .like {
+          margin-right: 6px;
+        }
+
+        .btn_action {
+          height: 40px;
+          width: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.19);
+          backdrop-filter: blur(7.5px);
+          border-radius: 7px;
+        }
+      }
+    }
+
+    .info_use {
+      display: flex;
+      flex-direction: column;
+      gap: 15px 0px;
+
+      ul,
+      li {
+        list-style: none;
+      }
+
+      .list_use {
+        background: rgba(0, 0, 0, 0.19);
+        border-radius: 10px;
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+      }
+
+      .text_use {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 110.5%;
+        color: #ffffff;
+      }
+    }
+  }
+}
