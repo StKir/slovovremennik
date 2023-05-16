@@ -19,10 +19,10 @@ const AllWords = () => {
             </Teg>
           ))}
         </div>
-        <FormModalsAuth />
+
         <div className={styles.word__content}>
           <form className={styles.form_search_word}>
-            <MainInput placeholder="Поиск" />
+            <MainInput placeholder="Поиск" typeTheme="secondary" />
             <MainButton size="small" type="button">
               Поиск
             </MainButton>
