@@ -6,3 +6,24 @@
 
 %error {
 }
+
+@mixin _1200 {
+  @media (max-width: 1170px) {
+    .container {
+      width: 720px;
+      margin: 0 auto;
+    }
+    @content;
+  }
+}
+
+@mixin _768 {
+  @media screen and (max-width: 768px) {
+    .container {
+      width: 290px;
+      margin: 0 auto;
+    }
+
+    @content;
+  }
+}

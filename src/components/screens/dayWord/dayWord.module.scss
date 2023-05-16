@@ -32,13 +32,13 @@
     color: #ffffff;
   }
 
-  .info_content {
+  .info_block {
     margin-top: 40px;
     display: grid;
     grid-template-columns: 1fr 771px;
     gap: 0px 202px;
 
-    .info_section {
+    .info_content {
       .list_info {
         ul,
         li {
@@ -108,7 +108,7 @@
       }
     }
 
-    .info_use {
+    .info_example {
       display: flex;
       flex-direction: column;
       gap: 15px 0px;
@@ -118,7 +118,7 @@
         list-style: none;
       }
 
-      .list_use {
+      .list_example {
         background: rgba(0, 0, 0, 0.19);
         border-radius: 10px;
         min-height: 62px;
@@ -127,12 +127,150 @@
         padding: 0px 10px;
       }
 
-      .text_use {
+      .text_example {
         font-style: normal;
         font-weight: 400;
         font-size: 20px;
         line-height: 110.5%;
         color: #ffffff;
+      }
+    }
+  }
+}
+
+@include _1200 {
+  .container {
+    .main_title {
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 108px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+    .main_direction {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+    .info_author {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 110.5%;
+    }
+
+    .info_block {
+      grid-template-columns: 1fr 475px;
+      gap: 0px 47px;
+
+      .item_info {
+        h4 {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 110.5%;
+        }
+        p {
+          font-family: 'Commissioner';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 110.5%;
+        }
+
+        .tegs_content {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px 20px;
+        }
+      }
+
+      .info_example {
+        .text_example {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 110.5%;
+        }
+      }
+
+      .likes_func {
+        margin-top: 25px;
+        .like {
+        }
+
+        .btn_action {
+        }
+      }
+    }
+  }
+}
+
+@include _768 {
+  .container {
+    .main_title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 44px;
+    }
+    .main_direction {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+    }
+    .info_author {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 110.5%;
+    }
+
+    .info_block {
+      grid-template-columns: 1fr;
+      gap: 0px 47px;
+
+      .item_info {
+        h4 {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 110.5%;
+        }
+        p {
+          font-family: 'Commissioner';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 110.5%;
+        }
+
+        .tegs_content {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px 20px;
+        }
+      }
+
+      .info_example {
+        .text_example {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 110.5%;
+        }
+      }
+
+      .likes_func {
+        margin-top: 25px;
+        .like {
+        }
+
+        .btn_action {
+        }
       }
     }
   }
