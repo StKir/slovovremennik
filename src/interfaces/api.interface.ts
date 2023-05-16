@@ -5,4 +5,5 @@ export interface IWord {
   tegs: Array<string>;
   example: Array<string>;
   author: string;
+  likes: string | number;
 }

@@ -17,6 +17,11 @@ interface IDemo {
   loading: boolean;
 }
 const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
+  const [like, setLike] = useState(false);
+
+  const addLike = () => {
+    setLike(true);
+  };
   return (
     <>
       <h2 className={styles.main_title}>{data.word}</h2>
@@ -42,13 +47,12 @@ const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
           <h4 className={styles.info_author}>Автор: {data.author}</h4>
 
           <div className={styles.likes_func}>
-            <div className={clsx(styles.btn_action, styles.like)}>
+            <div className={styles.like_count}>{data.likes}</div>
+            <div
+              className={clsx(styles.btn_action, styles.like, like ? styles.active : '')}
+              onClick={addLike}>
               <Image src={Like} alt="like" />
             </div>
-            <div className={clsx(styles.btn_action, styles.dislike)}>
-              <Image src={DisLike} alt="dislike" />
-            </div>
-            <div className={styles.disable}></div>
           </div>
         </div>
 
