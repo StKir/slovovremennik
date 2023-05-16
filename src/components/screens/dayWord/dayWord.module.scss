@@ -124,7 +124,7 @@
         min-height: 62px;
         display: flex;
         align-items: center;
-        padding: 0px 10px;
+        padding: 20px 10px;
       }
 
       .text_example {
@@ -231,27 +231,26 @@
 
     .info_block {
       grid-template-columns: 1fr;
-      gap: 0px 47px;
+      gap: 20px 0px;
 
       .item_info {
         h4 {
           font-style: normal;
-          font-weight: 600;
-          font-size: 20px;
+          font-weight: 400;
+          font-size: 18px;
           line-height: 110.5%;
         }
         p {
-          font-family: 'Commissioner';
           font-style: normal;
-          font-weight: 400;
-          font-size: 20px;
+          font-weight: 500;
+          font-size: 18px;
           line-height: 110.5%;
         }
 
         .tegs_content {
           display: flex;
           flex-wrap: wrap;
-          gap: 5px 20px;
+          gap: 5px 26px;
         }
       }
 
@@ -266,11 +265,6 @@
 
       .likes_func {
         margin-top: 25px;
-        .like {
-        }
-
-        .btn_action {
-        }
       }
     }
   }
