@@ -1,3 +1,5 @@
+@import '@/styles/_variable.scss';
+
 .teg {
   padding: 10px;
   font-style: normal;
@@ -16,5 +18,23 @@
   }
   &.pink {
     background-color: #9c2dcd;
+  }
+}
+
+@include _1200 {
+  .teg {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 110.5%;
+  }
+}
+
+@include _768 {
+  .teg {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 110.5%;
   }
 }
