@@ -1,6 +1,9 @@
 @import './../../../styles/variable';
 
 .container {
+  * {
+    cursor: default;
+  }
   @extend %container;
 
   .name_page {

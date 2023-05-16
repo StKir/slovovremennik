@@ -7,62 +7,59 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 
 type Inputs = {
+
 	word: string;
 	description: string;
 	speech: string;
 	example: string;
 	teg: string;
+
 };
 
 const AddNewWord = () => {
-	const {
-		handleSubmit,
-		control,
-		formState: { errors }
-	} = useForm<Inputs>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-	const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-	return (
-		<section className={styles.addSection}>
-			<div className='container'>
-				<h2>Добавить слово</h2>
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className={styles.add_word_form}
-					name={styles.mainForm}
-				>
-					<div className={styles.from_wrp}>
-						<div className={styles.from_wrp_left}>
-							<label className={styles.form_label} htmlFor='word'>
-								<span>Слово</span>
-								<span className={styles.error}>{errors.word?.message}</span>
-								<Controller
-									name='word'
-									control={control}
-									rules={{
-										required: 'Обязательно для заполнения',
-										minLength: {
-											value: 2,
-											message: 'Минимум 2 символа'
-										}
-									}}
-									defaultValue=''
-									render={({ field }) => (
-										<MainInput
-											placeholder='Введие слово'
-											name={field.name}
-											onChange={field.onChange}
-										/>
-									)}
-								/>
-							</label>
-							<label className={styles.form_label} htmlFor='description'>
-								<span>Описание</span>
-
-								<span className={styles.error}>
-									{errors.description?.message}
-								</span>
-
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  return (
+    <section className={styles.addSection}>
+      <div className="container">
+        <h2>Добавить слово</h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={styles.add_word_form}
+          name={styles.mainForm}>
+          <div className={styles.from_wrp}>
+            <div className={styles.from_wrp_left}>
+              <label className={styles.form_label} htmlFor="word">
+                <span>Слово</span>
+                <span className={styles.error}>{errors.word?.message}</span>
+                <Controller
+                  name="word"
+                  control={control}
+                  rules={{
+                    required: 'Обязательно для заполнения',
+                    minLength: {
+                      value: 2,
+                      message: 'Минимум 2 символа',
+                    },
+                  }}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <MainInput
+                      placeholder="Введие слово"
+                      name={field.name}
+                      onChange={field.onChange}
+                    />
+                  )}
+                />
+              </label>
+              <label className={styles.form_label} htmlFor="description">
+                <span>Описание</span>
+                <span className={styles.error}>{errors.description?.message}</span>
 								<Controller
 									control={control}
 									name='description'
