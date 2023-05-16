@@ -7,9 +7,13 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 
 type Inputs = {
-  word: string;
-  description: string;
-  speech: string;
+
+	word: string;
+	description: string;
+	speech: string;
+	example: string;
+	teg: string;
+
 };
 
 const AddNewWord = () => {
@@ -55,53 +59,101 @@ const AddNewWord = () => {
               </label>
               <label className={styles.form_label} htmlFor="description">
                 <span>Описание</span>
-
                 <span className={styles.error}>{errors.description?.message}</span>
-
-                <Controller
-                  control={control}
-                  name="description"
-                  rules={{
-                    required: 'Обязательно для заполнения',
-                    minLength: {
-                      value: 5,
-                      message: 'Минимум 5 символов',
-                    },
-                  }}
-                  render={({ field }) => (
-                    <MainTextArea
-                      placeholder="Введие слово"
-                      name={field.name}
-                      onChange={field.onChange}
-                    />
-                  )}
-                />
-              </label>
-            </div>
-            <div className={styles.from_wrp_rigth}>
-              <label className={styles.form_label} htmlFor="speech">
-                <span>Часть речи</span>
-                <span className={styles.error}>{errors.speech?.message}</span>
-                <Controller
-                  control={control}
-                  name="speech"
-                  rules={{
-                    required: 'Обязательно',
-                  }}
-                  render={({ field }) => (
-                    <MainSelect name={field.name} onChange={field.onChange} options={partSpech} />
-                  )}
-                />
-              </label>
-            </div>
-          </div>
-          <MainButton type="submit" size="big">
-            Добавить
-          </MainButton>
-        </form>
-      </div>
-    </section>
-  );
+								<Controller
+									control={control}
+									name='description'
+									rules={{
+										required: 'Обязательно для заполнения',
+										minLength: {
+											value: 5,
+											message: 'Минимум 5 символов'
+										}
+									}}
+									render={({ field }) => (
+										<MainTextArea
+											placeholder='Введие слово'
+											name={field.name}
+											onChange={field.onChange}
+										/>
+									)}
+								/>
+							</label>
+						</div>
+						<div className={styles.from_wrp_rigth}>
+							<label className={styles.form_label} htmlFor='speech'>
+								<span>Часть речи</span>
+								<span className={styles.error}>{errors.speech?.message}</span>
+								<Controller
+									control={control}
+									name='speech'
+									rules={{
+										required: 'Обязательно'
+									}}
+									render={({ field }) => (
+										<MainSelect
+											name={field.name}
+											onChange={field.onChange}
+											options={partSpech}
+										/>
+									)}
+								/>
+							</label>
+							<label className={styles.form_label} htmlFor='teg'>
+								<span>Теги</span>
+								<span className={styles.error}>{errors.teg?.message}</span>
+								<Controller
+									name='teg'
+									control={control}
+									rules={{
+										required: 'Обязательно',
+										minLength: {
+											value: 2,
+											message: 'Минимум 2 символа'
+										}
+									}}
+									defaultValue=''
+									render={({ field }) => (
+										<MainInput
+											placeholder='Введие теги через запятую'
+											name={field.name}
+											onChange={field.onChange}
+										/>
+									)}
+								/>
+							</label>
+							<label className={styles.form_label} htmlFor='example'>
+								<span>Пример</span>
+								<span className={styles.error}>{errors.example?.message}</span>
+								<Controller
+									name='example'
+									control={control}
+									rules={{
+										required: 'Обязательно',
+										minLength: {
+											value: 2,
+											message: 'Минимум 2 символа'
+										}
+									}}
+									defaultValue=''
+									render={({ field }) => (
+										<MainInput
+											placeholder='Введие пример'
+											name={field.name}
+											onChange={field.onChange}
+										/>
+									)}
+								/>
+							</label>
+						</div>
+					</div>
+					<MainButton type='submit' size='big'>
+						Добавить
+					</MainButton>
+				</form>
+			</div>
+		</section>
+	);
 };
 
 export default AddNewWord;
