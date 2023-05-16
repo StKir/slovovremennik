@@ -28,7 +28,7 @@ const InputsComponentsForForm: React.FC<IInputsComponentsForForm> = ({
             name={el.name}
             control={control}
             rules={{ ...el.rules }}
-            render={({ field }) => <MainInput type={el.type} {...field} />}
+            render={({ field }) => <MainInput type={el.type} {...field} typeTheme="secondary" />}
           />
           <span>{error[el.name]?.message}</span>
         </div>
