@@ -3,10 +3,7 @@ import styles from './mainInput.module.scss';
 
 const MainInput: React.FC<IMainInput> = ({ typeTheme = 'primary', ...props }) => {
   return (
-    <input
-      className={typeTheme === 'primary' ? styles.input_primary : styles.input_secondary}
-      {...props}
-    />
+    <input className={typeTheme === 'primary' ? styles.input : styles.input_secondary} {...props} />
   );
 };
 
