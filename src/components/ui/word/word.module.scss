@@ -1,0 +1,80 @@
+.word {
+  min-height: 60px;
+  left: 532px;
+  top: 480px;
+
+  background: linear-gradient(
+    91.91deg,
+    rgba(255, 255, 255, 0.3) -0.67%,
+    rgba(255, 255, 255, 0.1) 104.22%
+  );
+  backdrop-filter: blur(32px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #ffffff;
+
+  padding: 0px 18px;
+}
+
+.word_show {
+  min-height: 250px;
+
+  grid-row: span 3;
+
+  background: linear-gradient(
+    91.91deg,
+    rgba(255, 255, 255, 0.3) -0.67%,
+    rgba(255, 255, 255, 0.1) 104.22%
+  );
+  backdrop-filter: blur(32px);
+  border-radius: 20px;
+
+  padding: 20px;
+
+  .word_title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #ffffff;
+
+    margin-bottom: 20px;
+  }
+
+  .word_description {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #ffffff;
+
+    margin-bottom: 20px;
+  }
+  .word_list {
+    margin-bottom: 40px;
+
+    display: flex;
+    gap: 0px 10px;
+    flex-wrap: wrap;
+  }
+
+  .word_author {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 110.5%;
+    color: #ffffff;
+  }
+}

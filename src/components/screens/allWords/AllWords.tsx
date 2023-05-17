@@ -5,6 +5,7 @@ import styles from './allWord.module.scss';
 import { demoTegsList, demoWordsList } from './contstant';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { FormModalsAuth } from '@/components/ui/modals/ModalsAuthentical';
+import Words from '@/components/ui/word';
 
 const AllWords = () => {
   return (
@@ -27,13 +28,11 @@ const AllWords = () => {
               Поиск
             </MainButton>
           </form>
-          <ul className={styles.word_list}>
-            {demoWordsList.map(({ word }) => (
-              <li className={styles.word} key={word}>
-                {word}
-              </li>
+          <div className={styles.word_list}>
+            {demoWordsList.map((wordInfo) => (
+              <Words content={wordInfo} key={wordInfo.word} />
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>

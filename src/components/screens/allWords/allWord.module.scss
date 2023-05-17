@@ -42,5 +42,16 @@
     display: grid;
     grid-template-columns: 376px 111px;
     gap: 0px 20px;
+    margin-bottom: 60px;
+  }
+
+  .word_list {
+    ul,
+    li {
+      list-style: none;
+    }
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
   }
 }
