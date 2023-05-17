@@ -2,7 +2,7 @@ import MainInput from '@/components/ui/input/mainInput';
 import Teg from '@/components/ui/teg';
 
 import styles from './allWord.module.scss';
-import { demoTegsList } from './contstant';
+import { demoTegsList, demoWordsList } from './contstant';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { FormModalsAuth } from '@/components/ui/modals/ModalsAuthentical';
 
@@ -27,6 +27,13 @@ const AllWords = () => {
               Поиск
             </MainButton>
           </form>
+          <ul className={styles.word_list}>
+            {demoWordsList.map(({ word }) => (
+              <li className={styles.word} key={word}>
+                {word}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

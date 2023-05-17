@@ -1,4 +1,4 @@
-import { TTeg } from '@/interfaces/api.interface';
+import { IWord, TTeg } from '@/interfaces/api.interface';
 
 export const demoTegsList: TTeg = [
   'сленг',
@@ -15,4 +15,31 @@ export const demoTegsList: TTeg = [
   'Игры',
   'IT',
   'Новые',
+];
+
+export const demoWordsList: Array<IWord> = [
+  {
+    word: 'Килиманджарит',
+    description: 'Состоянии безумной эйфории, неописуемого кайфа',
+    tegs: ['Сленг', 'Модное'],
+    author: 'DarkPussyEater228',
+    speech: 'Прилагательное',
+    example: [
+      '- Брат когда вижу пейзаж родного аула меня жестко килиманджари',
+      'Наступило лето, солнце стучит в окно, тем самым килиманджарит мою душу',
+    ],
+    likes: 131,
+  },
+  {
+    word: 'Килиманджарит',
+    description: 'Состоянии безумной эйфории, неописуемого кайфа',
+    tegs: ['Сленг', 'Модное'],
+    author: 'DarkPussyEater228',
+    speech: 'Прилагательное',
+    example: [
+      '- Брат когда вижу пейзаж родного аула меня жестко килиманджари',
+      'Наступило лето, солнце стучит в окно, тем самым килиманджарит мою душу',
+    ],
+    likes: 131,
+  },
 ];
