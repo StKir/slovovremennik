@@ -1,5 +1,5 @@
 import MainInput from '@/components/ui/input/mainInput';
-import Teg from '@/components/ui/teg';
+import Teg, { ListFromTegs } from '@/components/ui/teg';
 
 import styles from './allWord.module.scss';
 import { demoTegsList, demoWordsList } from './contstant';
@@ -28,11 +28,7 @@ const AllWords = () => {
       <div className={styles.tegs_content}>
         <h3 className={styles.tegs_title}>Теги:</h3>
         <div className={styles.list_tegs}>
-          {demoTegsList.map((el, key) => (
-            <Teg type="blue" key={key}>
-              {el}
-            </Teg>
-          ))}
+          <ListFromTegs listTegs={demoTegsList} />
         </div>
 
         <div className={styles.word__content}>
