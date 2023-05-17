@@ -1,0 +1,57 @@
+@import '@/styles/_variable.scss';
+
+.container {
+  @extend %container;
+
+  .tegs_content {
+    overflow: hidden;
+  }
+  .tegs_title {
+    margin: 18px 0px 20px 0px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 39px;
+    color: #fff;
+  }
+
+  .list_tegs {
+    overflow-x: auto;
+    display: flex;
+    gap: 0px 17.6px;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    /* ie 10+ */
+    & {
+      -ms-overflow-style: none;
+    }
+
+    /* фф (свойство больше не работает, других способов тоже нет)*/
+    & {
+      overflow: -moz-scrollbars-none;
+
+      margin-bottom: 40px;
+    }
+  }
+
+  .form_search_word {
+    display: grid;
+    grid-template-columns: 376px 111px;
+    gap: 0px 20px;
+    margin-bottom: 60px;
+  }
+
+  .word_list {
+    ul,
+    li {
+      list-style: none;
+    }
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}

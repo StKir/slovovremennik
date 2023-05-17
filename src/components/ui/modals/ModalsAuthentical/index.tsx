@@ -7,6 +7,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import styles from './modals.module.scss';
 import { IFormComponent, IInputsComponentsForForm, TInput } from './types';
+import { motion } from 'framer-motion';
 
 const FormComponent: React.FC<IFormComponent> = ({ children, handlerClick }) => {
   return <form onSubmit={handlerClick}>{children}</form>;
@@ -27,7 +28,7 @@ const InputsComponentsForForm: React.FC<IInputsComponentsForForm> = ({
             name={el.name}
             control={control}
             rules={{ ...el.rules }}
-            render={({ field }) => <MainInput type={el.type} {...field} />}
+            render={({ field }) => <MainInput type={el.type} {...field} typeTheme="secondary" />}
           />
           <span>{error[el.name]?.message}</span>
         </div>
@@ -51,7 +52,12 @@ export const FormModalsAuth: React.FC = () => {
   const onSubmit: SubmitHandler<TInput> = (data) => console.log(data);
 
   return (
-    <div className={styles.modal}>
+    <motion.div
+      animate={{
+        opacity: 1,
+      }}
+      transition={{ ease: 'linear', duration: 0.6 }}
+      className={styles.modal}>
       <h2 className={styles.title}>Войти</h2>
       <FormComponent handlerClick={handleSubmit(onSubmit)}>
         <InputsComponentsForForm
@@ -67,7 +73,7 @@ export const FormModalsAuth: React.FC = () => {
           Зарегистрируйтесь
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -81,7 +87,12 @@ export const FormModalsReg: React.FC = () => {
   const onSubmit: SubmitHandler<TInput> = (data) => console.log(data);
 
   return (
-    <div className={styles.modal}>
+    <motion.div
+      animate={{
+        opacity: 1,
+      }}
+      transition={{ ease: 'linear', duration: 0.6 }}
+      className={styles.modal}>
       <h2 className={styles.title}>Регистрация</h2>
       <FormComponent handlerClick={handleSubmit(onSubmit)}>
         <InputsComponentsForForm
@@ -97,6 +108,6 @@ export const FormModalsReg: React.FC = () => {
           Войти
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
