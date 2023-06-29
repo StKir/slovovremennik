@@ -6,11 +6,12 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addNewWord, getAllTags } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
 import Loading from '@/components/ui/loading/Loading';
+import uuid from 'react-uuid';
 
 type Inputs = {
 	id: number | string;
@@ -61,8 +62,6 @@ const AddNewWord = () => {
 			: SetSelectedTag([...selectedTags, tag]);
 	};
 
-	const id = useId();
-
 	const onReset = (): void => {
 		// useForm плохо работает с кастомными textarea и select
 		reset();
@@ -73,10 +72,9 @@ const AddNewWord = () => {
 
 	const OnSubmit: SubmitHandler<Inputs> = (data) => {
 		if (selectedTags.length) {
-			data.id = id;
+			data.id = uuid();
 			data.tegs = selectedTags;
 			onReset();
-			console.log(data);
 			dispatch(addNewWord(data));
 		} else {
 			setError('tegs', { type: 'custom', message: 'Выберете хотябы 1 тег' });
