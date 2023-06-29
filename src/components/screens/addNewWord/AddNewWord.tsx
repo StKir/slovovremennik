@@ -7,9 +7,10 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect, useId, useState } from 'react';
-import { getAllTags } from '@/store/wordsSlice';
+import { addNewWord, getAllTags } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
+import Loading from '@/components/ui/loading/Loading';
 
 type Inputs = {
 	id: number | string;
@@ -17,7 +18,7 @@ type Inputs = {
 	description: string;
 	speech: string;
 	example: string;
-	teg: ITags[] | '';
+	tegs: ITags[];
 };
 
 const AddNewWord = () => {
@@ -25,37 +26,61 @@ const AddNewWord = () => {
 		handleSubmit,
 		control,
 		reset,
+		setError,
+		setValue,
 		formState: { errors }
 	} = useForm<Inputs>();
 	const [selectedTags, SetSelectedTag] = useState<ITags[]>([]);
 	const dispatch = useAppDispatch();
 	const tags = useAppSelector((state) => state.words.tags);
 
-	const selectTag = (tag: ITags) => {
-		if (selectedTags.includes(tag)) {
-			const newArr = selectedTags.filter((el) => el.id !== tag.id);
-			SetSelectedTag(newArr);
-		} else {
-			console.log('no');
+	useEffect(() => {
+		!tags.length && dispatch(getAllTags());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dispatch]);
 
-			SetSelectedTag([...selectedTags, tag]);
+	const renderTags = (): JSX.Element | JSX.Element[] => {
+		if (!(typeof tags === 'undefined') && tags.length) {
+			return tags.map((el) => (
+				<Teg
+					onClick={() => selectTag(el)}
+					type={selectedTags.includes(el) ? 'pink' : 'blue'}
+					key={el.id}
+				>
+					{el.name}
+				</Teg>
+			));
+		} else {
+			return <Loading />;
 		}
 	};
 
-	useEffect(() => {
-		if (tags.length < 1) {
-			dispatch(getAllTags());
-		}
-	}, [dispatch, tags.length]);
+	const selectTag = (tag: ITags) => {
+		selectedTags.includes(tag)
+			? SetSelectedTag(selectedTags.filter((el) => el.id !== tag.id))
+			: SetSelectedTag([...selectedTags, tag]);
+	};
 
 	const id = useId();
 
-	const OnSubmit: SubmitHandler<Inputs> = (data) => {
-		data.teg = selectedTags;
-		data.id = id;
-		console.log(data);
+	const onReset = (): void => {
+		// useForm плохо работает с кастомными textarea и select
 		reset();
 		SetSelectedTag([]);
+		setValue('speech', '');
+		setValue('description', '');
+	};
+
+	const OnSubmit: SubmitHandler<Inputs> = (data) => {
+		if (selectedTags.length) {
+			data.id = id;
+			data.tegs = selectedTags;
+			onReset();
+			console.log(data);
+			dispatch(addNewWord(data));
+		} else {
+			setError('tegs', { type: 'custom', message: 'Выберете хотябы 1 тег' });
+		}
 	};
 	return (
 		<section className={styles.addSection}>
@@ -87,6 +112,7 @@ const AddNewWord = () => {
 											placeholder='Введие слово'
 											name={field.name}
 											onChange={field.onChange}
+											value={field.value}
 										/>
 									)}
 								/>
@@ -108,9 +134,10 @@ const AddNewWord = () => {
 									}}
 									render={({ field }) => (
 										<MainTextArea
-											placeholder='Введие слово'
+											placeholder='Описание'
 											name={field.name}
 											onChange={field.onChange}
+											value={field.value}
 										/>
 									)}
 								/>
@@ -131,43 +158,22 @@ const AddNewWord = () => {
 											name={field.name}
 											onChange={field.onChange}
 											options={partSpech}
+											value={field.value}
 										/>
 									)}
 								/>
 							</label>
 							<label className={styles.form_label} htmlFor='teg'>
 								<span>Теги</span>
-								<span className={styles.error}>{errors.teg?.message}</span>
-								{/* <Controller
-									name='teg'
+								<span className={styles.error}>{errors.tegs?.message}</span>
+								<Controller
+									name='tegs'
 									control={control}
-									rules={{
-										required: 'Обязательно',
-										minLength: {
-											value: 2,
-											message: 'Минимум 2 символа'
-										}
-									}}
-									defaultValue=''
+									defaultValue={selectedTags}
 									render={({ field }) => (
-										<MainInput
-											placeholder='Введие теги через запятую'
-											name={field.name}
-											onChange={field.onChange}
-										/>
+										<div className={styles.form_tags}>{renderTags()}</div>
 									)}
-								/> */}
-								<div className={styles.form_tags}>
-									{tags.map((el) => (
-										<Teg
-											onClick={() => selectTag(el)}
-											type={selectedTags.includes(el) ? 'pink' : 'blue'}
-											key={el.id}
-										>
-											{el.name}
-										</Teg>
-									))}
-								</div>
+								/>
 							</label>
 							<label className={styles.form_label} htmlFor='example'>
 								<span>Пример</span>
@@ -188,6 +194,7 @@ const AddNewWord = () => {
 											placeholder='Введие пример'
 											name={field.name}
 											onChange={field.onChange}
+											value={field.value}
 										/>
 									)}
 								/>

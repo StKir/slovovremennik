@@ -27,7 +27,6 @@ export const getAllWords = createAsyncThunk<IWord[]>(
 			method: 'GET',
 			url: 'http://localhost:3004/words'
 		})
-			// .then((data) => console.log(data))
 			.then((data) => data.data)
 			.catch((err) => console.log(err));
 	}
@@ -39,7 +38,7 @@ export const addNewWord = createAsyncThunk<IWord, IWord>(
 		return await axios({
 			method: 'POST',
 			url: 'http://localhost:3004/words',
-			data: { word }
+			data: { ...word }
 		})
 			.then((data) => data.data)
 			.catch((err) => console.log(err));

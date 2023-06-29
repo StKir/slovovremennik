@@ -5,13 +5,35 @@
       "word": "string",
       "description": "string",
       "speech": "string",
-      "tegs": [{
-        "id":1,
-        "name": "Новое"
-      }],
-      "example": ["dasdasd", "dsadasdasda"],
+      "tegs": [
+        {
+          "id": 1,
+          "name": "Новое"
+        }
+      ],
+      "example": [
+        "dasdasd",
+        "dsadasdasda"
+      ],
       "author": "Dard123",
       "likes": 450
+    },
+    {
+      "word": "Слово 1",
+      "description": "Слово тест",
+      "speech": "Существительное",
+      "tegs": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "example": "Слово Словов",
+      "id": ":R6m:"
     }
   ],
   "tegs": [
