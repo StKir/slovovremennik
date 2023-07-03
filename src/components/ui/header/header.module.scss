@@ -77,6 +77,12 @@
 	.sign_in:hover {
 		background: rgba(225, 225, 225, 0.5);
 	}
+	@media screen and (max-width: 1200px) {
+		margin-bottom: 60px;
+	}
+	@media screen and (max-width: 768px) {
+		margin-bottom: 50px;
+	}
 }
 
 .active_link {

@@ -34,6 +34,125 @@
       ],
       "example": "Слово Словов",
       "id": ":R6m:"
+    },
+    {
+      "word": "Ебабельная",
+      "description": "Очень красивая дама, с которой хочется совокупляться",
+      "example": "Наша навоя училка по матеше, молодая и ебабельная! ",
+      "speech": "Прилагательное",
+      "tegs": [
+        {
+          "id": 11,
+          "name": "18+"
+        },
+        {
+          "id": 9,
+          "name": "Юмор"
+        }
+      ],
+      "id": "b7dd6d07-13a3-769d-1e2f-8035d3aec6c4"
+    },
+    {
+      "word": "Dsadasdsadsad",
+      "description": "sadsadasdasdasdsadasda",
+      "example": "dasdsadasdsad",
+      "speech": "Местоимение",
+      "tegs": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "id": "20d6fa12-ef97-6bc3-e558-722e59da7ec9"
+    },
+    {
+      "word": "Dsadsadasdas",
+      "description": "dasdasdsadsadasdas",
+      "example": "sadsadasdsad",
+      "speech": "Прилагательное",
+      "tegs": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 4,
+          "name": "Культура"
+        },
+        {
+          "id": 8,
+          "name": "Жаргонизмы"
+        }
+      ],
+      "id": "6fd72ec8-fe96-faf0-2aae-38f7d05dec61"
+    },
+    {
+      "word": "Dsadsadasdas",
+      "description": "dasdasdasdasdasd",
+      "example": "sadasdasdasd",
+      "speech": "Числительное",
+      "tegs": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 4,
+          "name": "Культура"
+        }
+      ],
+      "id": "5486c23e-866f-0d3e-6005-dfa3441580f7"
+    },
+    {
+      "word": "Dsadasdasdsad",
+      "description": "adsasdasdsadsad",
+      "example": "asdasdasdsadsad",
+      "speech": "Местоимение",
+      "tegs": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "a2757823-a65c-8109-f1f5-5d3b2b4e4e4d"
+    },
+    {
+      "word": "Выфвфывыф",
+      "description": "выфвфывыфвфывф",
+      "example": "выфвфывфывфы",
+      "speech": "Местоимение",
+      "tegs": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 6,
+          "name": "IT"
+        }
+      ],
+      "id": "08c140f0-46f0-2f57-08ae-a7f05d0a10e2"
+    },
+    {
+      "word": "Dasdsad",
+      "description": "asdasdasdas",
+      "example": "dsadasdsadsad",
+      "speech": "Числительное",
+      "tegs": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "665736d4-4545-a00b-4936-73527017716a"
     }
   ],
   "tegs": [
@@ -52,6 +171,34 @@
     {
       "id": 4,
       "name": "Культура"
+    },
+    {
+      "id": 5,
+      "name": "Игры"
+    },
+    {
+      "id": 6,
+      "name": "IT"
+    },
+    {
+      "id": 7,
+      "name": "Новые"
+    },
+    {
+      "id": 8,
+      "name": "Жаргонизмы"
+    },
+    {
+      "id": 9,
+      "name": "Юмор"
+    },
+    {
+      "id": 10,
+      "name": "Метаирония"
+    },
+    {
+      "id": 11,
+      "name": "18+"
     }
   ]
 }

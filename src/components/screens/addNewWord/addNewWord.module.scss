@@ -9,11 +9,20 @@
 			display: grid;
 			gap: 20px;
 			width: 100%;
+			@media screen and (max-width: 768px) {
+				margin-bottom: 20px;
+			}
 		}
 		&_rigth {
 			display: grid;
 			width: 376px;
 			gap: 20px;
+		}
+		@media screen and (max-width: 768px) {
+			display: block;
+			&_rigth {
+				width: 100%;
+			}
 		}
 	}
 	.form_label {
@@ -43,5 +52,18 @@
 	}
 	button {
 		margin-top: 40px;
+	}
+}
+.thxForAdded {
+	margin: 0 auto;
+	width: 50%;
+	text-align: center;
+	display: grid;
+	gap: 20px;
+	box-sizing: border-box;
+	margin-top: 50px;
+	span {
+		font-size: 24px;
+		color: #fff;
 	}
 }

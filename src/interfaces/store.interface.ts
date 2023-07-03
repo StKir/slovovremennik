@@ -5,4 +5,5 @@ export type TWords = {
 	ids: [];
 	tags: ITags[];
 	LoadingStatus: 'idle' | 'loading' | 'error' | 'start';
+	addWordStatus: 'start' | 'added' | 'error' | 'loading';
 };

@@ -17,7 +17,8 @@ const initialState = {
 	entities: {},
 	ids: [],
 	tags: [],
-	LoadingStatus: 'start'
+	LoadingStatus: 'start',
+	addWordStatus: 'start'
 } as TWords;
 
 export const getAllWords = createAsyncThunk<IWord[]>(
@@ -61,7 +62,11 @@ export const getAllTags = createAsyncThunk<ITags[]>(
 const wordsSlice = createSlice({
 	name: 'words',
 	initialState,
-	reducers: {},
+	reducers: {
+		closeModalThx: (state) => {
+			state.addWordStatus = 'start';
+		}
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getAllWords.pending, (state) => {
@@ -84,8 +89,15 @@ const wordsSlice = createSlice({
 			.addCase(getAllTags.rejected, (state) => {
 				state.LoadingStatus = 'error';
 			})
+			.addCase(addNewWord.pending, (state) => {
+				state.addWordStatus = 'loading';
+			})
+			.addCase(addNewWord.rejected, (state) => {
+				state.addWordStatus = 'error';
+			})
 			.addCase(addNewWord.fulfilled, (state, { payload }) => {
 				state.LoadingStatus = 'start';
+				state.addWordStatus = 'added';
 				wordAdapter.addOne(state, payload);
 			});
 	}
@@ -97,6 +109,6 @@ export const { selectAll } = wordAdapter.getSelectors<RootState>(
 	(state) => state.words
 );
 
-// export const { resetStatus, testStatus, removeTransaction } = actions;
+export const { closeModalThx } = actions;
 
 export default reducer;

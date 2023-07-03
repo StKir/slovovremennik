@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"json-server --watch db.json --port 3004\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +16,7 @@
     "@types/react-redux": "^7.1.25",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
+    "concurrently": "^8.2.0",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
     "framer-motion": "^10.12.10",
