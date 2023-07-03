@@ -6,7 +6,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addNewWord, closeModalThx, getAllTags } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
