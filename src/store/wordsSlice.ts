@@ -2,7 +2,8 @@ import {
 	createSlice,
 	createAsyncThunk,
 	createEntityAdapter,
-	PayloadAction
+	PayloadAction,
+	createSelector
 } from '@reduxjs/toolkit';
 
 import axios from 'axios';
@@ -18,7 +19,8 @@ const initialState = {
 	ids: [],
 	tags: [],
 	LoadingStatus: 'start',
-	addWordStatus: 'start'
+	addWordStatus: 'start',
+	selectedTags: []
 } as TWords;
 
 export const getAllWords = createAsyncThunk<IWord[]>(
@@ -65,6 +67,14 @@ const wordsSlice = createSlice({
 	reducers: {
 		closeModalThx: (state) => {
 			state.addWordStatus = 'start';
+		},
+		selectTags: (state, { payload }: PayloadAction<ITags>) => {
+			state.selectedTags = [...state.selectedTags, payload];
+		},
+		removeTags: (state, { payload }: PayloadAction<ITags>) => {
+			state.selectedTags = state.selectedTags.filter(
+				(el) => el.id !== payload.id
+			);
 		}
 	},
 	extraReducers: (builder) => {
@@ -109,6 +119,26 @@ export const { selectAll } = wordAdapter.getSelectors<RootState>(
 	(state) => state.words
 );
 
-export const { closeModalThx } = actions;
+export const filteredWords = createSelector(
+	[selectAll, (state) => state.words.selectedTags],
+	(words, selectedTags: ITags[]) => {
+		if (!selectedTags.length) {
+			return words;
+		}
+		const sele: IWord[] = [];
+		selectedTags.forEach((selectag) => {
+			words.forEach((el1) => {
+				el1.tegs.forEach((teg) => {
+					if (teg.id === selectag.id) {
+						sele.push(el1);
+					}
+				});
+			});
+		});
+		return sele;
+	}
+);
+
+export const { closeModalThx, selectTags, removeTags } = actions;
 
 export default reducer;

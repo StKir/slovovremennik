@@ -2,17 +2,26 @@ import MainInput from '@/components/ui/input/mainInput';
 import Teg from '@/components/ui/teg';
 
 import styles from './allWord.module.scss';
-import { demoTegsList, demoWordsList } from './contstant';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { FormModalsAuth } from '@/components/ui/modals/ModalsAuthentical';
 import Words from '@/components/ui/word';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { getAllTags, getAllWords, selectAll } from '@/store/wordsSlice';
+import {
+	filteredWords,
+	getAllTags,
+	getAllWords,
+	removeTags,
+	selectAll,
+	selectTags
+} from '@/store/wordsSlice';
+import { ITags } from '@/interfaces/api.interface';
 
 const AllWords = () => {
 	const words = useAppSelector(selectAll);
+	const words1 = useAppSelector(filteredWords);
 	const tags = useAppSelector((state) => state.words.tags);
+	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -22,6 +31,12 @@ const AllWords = () => {
 		}
 	}, [dispatch, tags.length]);
 
+	const OnValidateTags = (el: ITags) => {
+		selectedTags.includes(el)
+			? dispatch(removeTags(el))
+			: dispatch(selectTags(el));
+	};
+
 	return (
 		<div className={styles.container}>
 			<h2>Все слова</h2>
@@ -29,7 +44,11 @@ const AllWords = () => {
 				<h3 className={styles.tegs_title}>Теги:</h3>
 				<div className={styles.list_tegs}>
 					{tags.map((el) => (
-						<Teg type='blue' key={el.id}>
+						<Teg
+							type={selectedTags.includes(el) ? 'pink' : 'blue'}
+							key={el.id}
+							onClick={() => OnValidateTags(el)}
+						>
 							{el.name}
 						</Teg>
 					))}
@@ -43,8 +62,8 @@ const AllWords = () => {
 						</MainButton>
 					</form>
 					<div className={styles.word_list}>
-						{words.map((wordInfo) => (
-							<Words content={wordInfo} key={wordInfo.word} />
+						{words1.map((wordInfo) => (
+							<Words content={wordInfo} key={wordInfo.id} />
 						))}
 					</div>
 				</div>
