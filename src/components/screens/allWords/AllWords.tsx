@@ -8,28 +8,36 @@ import Words from '@/components/ui/word';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
+	addPage,
 	filteredWords,
 	getAllTags,
 	getAllWords,
 	removeTags,
-	selectAll,
 	selectTags
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 
 const AllWords = () => {
-	const words = useAppSelector(selectAll);
-	const words1 = useAppSelector(filteredWords);
+	const words = useAppSelector(filteredWords);
 	const tags = useAppSelector((state) => state.words.tags);
+	const page = useAppSelector((state) => state.words.page);
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(getAllWords());
+		dispatch(getAllWords(page));
 		if (tags.length < 1) {
 			dispatch(getAllTags());
 		}
-	}, [dispatch, tags.length]);
+	}, [dispatch, tags.length, page]);
+
+	const handleScroll = () => {
+		const bottom =
+			document.body.scrollHeight < window.scrollY + window.innerHeight;
+		if (bottom) {
+			dispatch(addPage());
+		}
+	};
 
 	const OnValidateTags = (el: ITags) => {
 		selectedTags.includes(el)
@@ -40,6 +48,7 @@ const AllWords = () => {
 	return (
 		<div className={styles.container}>
 			<h2>Все слова</h2>
+			<button onClick={() => dispatch(addPage())}>TOT</button>
 			<div className={styles.tegs_content}>
 				<h3 className={styles.tegs_title}>Теги:</h3>
 				<div className={styles.list_tegs}>
@@ -62,7 +71,7 @@ const AllWords = () => {
 						</MainButton>
 					</form>
 					<div className={styles.word_list}>
-						{words1.map((wordInfo) => (
+						{words.map((wordInfo) => (
 							<Words content={wordInfo} key={wordInfo.id} />
 						))}
 					</div>

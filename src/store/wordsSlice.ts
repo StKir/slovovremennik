@@ -20,15 +20,16 @@ const initialState = {
 	tags: [],
 	LoadingStatus: 'start',
 	addWordStatus: 'start',
-	selectedTags: []
+	selectedTags: [],
+	page: 9
 } as TWords;
 
-export const getAllWords = createAsyncThunk<IWord[]>(
+export const getAllWords = createAsyncThunk<IWord[], number>(
 	'words/getAllWords',
-	async () => {
+	async (num = 0) => {
 		return await axios({
 			method: 'GET',
-			url: 'http://localhost:3004/words'
+			url: `http://localhost:3004/words?_start=${0}&_end=${num}`
 		})
 			.then((data) => data.data)
 			.catch((err) => console.log(err));
@@ -53,9 +54,8 @@ export const getAllTags = createAsyncThunk<ITags[]>(
 	async () => {
 		return await axios({
 			method: 'GET',
-			url: 'http://localhost:3004/tegs'
+			url: `http://localhost:3004/tegs`
 		})
-			// .then((data) => console.log(data))
 			.then((data) => data.data)
 			.catch((err) => console.log(err));
 	}
@@ -75,6 +75,9 @@ const wordsSlice = createSlice({
 			state.selectedTags = state.selectedTags.filter(
 				(el) => el.id !== payload.id
 			);
+		},
+		addPage: (state) => {
+			state.page += 9;
 		}
 	},
 	extraReducers: (builder) => {
@@ -125,20 +128,18 @@ export const filteredWords = createSelector(
 		if (!selectedTags.length) {
 			return words;
 		}
-		const sele: IWord[] = [];
-		selectedTags.forEach((selectag) => {
-			words.forEach((el1) => {
-				el1.tegs.forEach((teg) => {
-					if (teg.id === selectag.id) {
-						sele.push(el1);
-					}
-				});
-			});
+		const idArray = selectedTags.map((el) => {
+			return el.id;
 		});
-		return sele;
+		return words.filter((el) => {
+			const tagsIdArray = el.tegs.map((el) => {
+				return el.id;
+			});
+			return tagsIdArray.some((id) => idArray.includes(id));
+		});
 	}
 );
 
-export const { closeModalThx, selectTags, removeTags } = actions;
+export const { closeModalThx, selectTags, removeTags, addPage } = actions;
 
 export default reducer;

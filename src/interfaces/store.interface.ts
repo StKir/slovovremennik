@@ -7,4 +7,5 @@ export type TWords = {
 	LoadingStatus: 'idle' | 'loading' | 'error' | 'start';
 	addWordStatus: 'start' | 'added' | 'error' | 'loading';
 	selectedTags: ITags[];
+	page: number;
 };
