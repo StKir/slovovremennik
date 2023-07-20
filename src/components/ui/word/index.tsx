@@ -13,7 +13,7 @@ const ShowWordWithInformation: React.FC<{
 			<h2 className={styles.word_title}>{content.word}</h2>
 			<p className={styles.word_description}>{content.description}</p>
 			<div className={styles.word_list}>
-				{content.tegs.map((el) => (
+				{content.tags.map((el) => (
 					<Teg type='pink' key={el.id}>
 						{el.name}
 					</Teg>

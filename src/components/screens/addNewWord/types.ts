@@ -7,7 +7,7 @@ export type Inputs = {
 	description: string;
 	speech: string;
 	example: string;
-	tegs: ITags[];
+	tags: ITags[];
 };
 
 export type PropsComponents = {

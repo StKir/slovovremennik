@@ -21,8 +21,20 @@ const initialState = {
 	LoadingStatus: 'start',
 	addWordStatus: 'start',
 	selectedTags: [],
-	page: 9
+	page: 18
 } as TWords;
+
+export const searchWord = createAsyncThunk<IWord | any, string>(
+	'words/searchWord',
+	async (word) => {
+		return await axios({
+			method: 'GET',
+			url: `http://localhost:3004/words?word=${word}`
+		})
+			.then((data) => data.data)
+			.catch((err) => console.log(err));
+	}
+);
 
 export const getAllWords = createAsyncThunk<IWord[], number>(
 	'words/getAllWords',
@@ -77,7 +89,7 @@ const wordsSlice = createSlice({
 			);
 		},
 		addPage: (state) => {
-			state.page += 9;
+			state.page += 18;
 		}
 	},
 	extraReducers: (builder) => {
@@ -110,8 +122,20 @@ const wordsSlice = createSlice({
 			})
 			.addCase(addNewWord.fulfilled, (state, { payload }) => {
 				state.LoadingStatus = 'start';
-				state.addWordStatus = 'added';
-				wordAdapter.addOne(state, payload);
+				if (state.addWordStatus !== 'error') {
+					state.addWordStatus = 'added';
+					wordAdapter.addOne(state, payload);
+				}
+			})
+			.addCase(searchWord.rejected, (state) => {
+				state.addWordStatus = 'start';
+			})
+			.addCase(searchWord.fulfilled, (state, { payload }) => {
+				if (payload[0]) {
+					state.addWordStatus = 'error';
+				} else {
+					state.addWordStatus = 'start';
+				}
 			});
 	}
 });
@@ -132,7 +156,7 @@ export const filteredWords = createSelector(
 			return el.id;
 		});
 		return words.filter((el) => {
-			const tagsIdArray = el.tegs.map((el) => {
+			const tagsIdArray = el.tags.map((el) => {
 				return el.id;
 			});
 			return tagsIdArray.some((id) => idArray.includes(id));

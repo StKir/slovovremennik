@@ -7,7 +7,12 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect, useState } from 'react';
-import { addNewWord, closeModalThx, getAllTags } from '@/store/wordsSlice';
+import {
+	addNewWord,
+	closeModalThx,
+	getAllTags,
+	searchWord
+} from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
 import Loading from '@/components/ui/loading/Loading';
@@ -26,6 +31,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 
 	const [selectedTags, SetSelectedTag] = useState<ITags[]>([]);
 	const tags = useAppSelector((state) => state.words.tags);
+	const status = useAppSelector((state) => state.words.addWordStatus);
 
 	useEffect(() => {
 		!tags.length && dispatch(getAllTags());
@@ -67,12 +73,14 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const OnSubmit: SubmitHandler<Inputs> = (data) => {
 		if (selectedTags.length) {
 			data.id = uuid();
-			data.tegs = selectedTags;
+			data.tags = selectedTags;
 			data.word = data.word[0].toUpperCase() + data.word.slice(1).toLowerCase();
 			onReset();
+			dispatch(searchWord(data.word));
 			dispatch(addNewWord(data));
+			// dispatch(addNewWord(data))
 		} else {
-			setError('tegs', { type: 'custom', message: 'Укажите теги' });
+			setError('tags', { type: 'custom', message: 'Укажите теги' });
 		}
 	};
 	return (
@@ -181,9 +189,9 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 						</label>
 						<label className={styles.form_label} htmlFor='teg'>
 							<span>Теги</span>
-							<span className={styles.error}>{errors.tegs?.message}</span>
+							<span className={styles.error}>{errors.tags?.message}</span>
 							<Controller
-								name='tegs'
+								name='tags'
 								control={control}
 								defaultValue={selectedTags}
 								render={({ field }) => (
@@ -219,9 +227,9 @@ const ThxForAdded: React.FC<PropsComponents> = ({ dispatch }) => {
 
 const ErrorAdded: React.FC<PropsComponents> = ({ dispatch }) => {
 	return (
-		<div className={styles.errorAdded}>
+		<div className={styles.thxForAdded}>
 			<h2>Ошибка добавления!</h2>
-			<span>Попробуйте еще раз</span>
+			<span>Кажется такое слово у нас уже есть</span>
 			<MainButton
 				type='button'
 				size='big'

@@ -34,8 +34,11 @@ const AllWords = () => {
 	const handleScroll = () => {
 		const bottom =
 			document.body.scrollHeight < window.scrollY + window.innerHeight;
+		console.log('new');
 		if (bottom) {
-			dispatch(addPage());
+			// setTimeout(() => {
+			// 	dispatch(addPage());
+			// }, 3000);
 		}
 	};
 
@@ -46,9 +49,8 @@ const AllWords = () => {
 	};
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.container} onScroll={() => handleScroll()}>
 			<h2>Все слова</h2>
-			<button onClick={() => dispatch(addPage())}>TOT</button>
 			<div className={styles.tegs_content}>
 				<h3 className={styles.tegs_title}>Теги:</h3>
 				<div className={styles.list_tegs}>
