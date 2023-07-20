@@ -77,6 +77,11 @@ const AllWords = () => {
 							<Words content={wordInfo} key={wordInfo.id} />
 						))}
 					</div>
+					<div className={styles.more_btn}>
+						<MainButton size='small' onClick={() => dispatch(addPage())}>
+							Загрузить еще
+						</MainButton>
+					</div>
 				</div>
 			</div>
 		</div>
