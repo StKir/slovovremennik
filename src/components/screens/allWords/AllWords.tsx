@@ -3,9 +3,8 @@ import Teg from '@/components/ui/teg';
 
 import styles from './allWord.module.scss';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
-import { FormModalsAuth } from '@/components/ui/modals/ModalsAuthentical';
 import Words from '@/components/ui/word';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
 	addPage,
@@ -13,15 +12,19 @@ import {
 	getAllTags,
 	getAllWords,
 	removeTags,
-	selectTags
+	selectTags,
+	searchWordbyInput
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 
 const AllWords = () => {
+	const [search, setSearch] = useState<string>('');
 	const words = useAppSelector(filteredWords);
 	const tags = useAppSelector((state) => state.words.tags);
 	const page = useAppSelector((state) => state.words.page);
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
+	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
+	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -29,18 +32,7 @@ const AllWords = () => {
 		if (tags.length < 1) {
 			dispatch(getAllTags());
 		}
-	}, [dispatch, tags.length, page]);
-
-	const handleScroll = () => {
-		const bottom =
-			document.body.scrollHeight < window.scrollY + window.innerHeight;
-		console.log('new');
-		if (bottom) {
-			// setTimeout(() => {
-			// 	dispatch(addPage());
-			// }, 3000);
-		}
-	};
+	}, [tags.length, page, dispatch]);
 
 	const OnValidateTags = (el: ITags) => {
 		selectedTags.includes(el)
@@ -48,8 +40,19 @@ const AllWords = () => {
 			: dispatch(selectTags(el));
 	};
 
+	const onSearch = (word: string) => {
+		if (word.length) {
+			dispatch(
+				searchWordbyInput(word[0].toUpperCase() + word.slice(1).toLowerCase())
+			);
+		} else {
+			dispatch(searchWordbyInput(''));
+			dispatch(getAllWords(18));
+		}
+	};
+
 	return (
-		<div className={styles.container} onScroll={() => handleScroll()}>
+		<div className={styles.container}>
 			<h2>Все слова</h2>
 			<div className={styles.tegs_content}>
 				<h3 className={styles.tegs_title}>Теги:</h3>
@@ -67,8 +70,17 @@ const AllWords = () => {
 
 				<div className={styles.word__content}>
 					<form className={styles.form_search_word}>
-						<MainInput placeholder='Поиск' typeTheme='secondary' />
-						<MainButton size='small' type='button'>
+						<MainInput
+							placeholder='Поиск'
+							typeTheme='secondary'
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+						/>
+						<MainButton
+							size='small'
+							type='button'
+							onClick={() => onSearch(search)}
+						>
 							Поиск
 						</MainButton>
 					</form>
@@ -76,9 +88,15 @@ const AllWords = () => {
 						{words.map((wordInfo) => (
 							<Words content={wordInfo} key={wordInfo.id} />
 						))}
+						{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
 					</div>
 					<div className={styles.more_btn}>
-						<MainButton size='small' onClick={() => dispatch(addPage())}>
+						<MainButton
+							style={wordStatusSearch !== 'start' ? { display: 'none' } : {}}
+							size='small'
+							disabled={wordStatus === 'error' || wordStatus === 'loading'}
+							onClick={() => dispatch(addPage())}
+						>
 							Загрузить еще
 						</MainButton>
 					</div>

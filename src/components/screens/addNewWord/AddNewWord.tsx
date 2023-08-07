@@ -78,7 +78,6 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 			onReset();
 			dispatch(searchWord(data.word));
 			dispatch(addNewWord(data));
-			// dispatch(addNewWord(data))
 		} else {
 			setError('tags', { type: 'custom', message: 'Укажите теги' });
 		}

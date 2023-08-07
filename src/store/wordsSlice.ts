@@ -20,13 +20,29 @@ const initialState = {
 	tags: [],
 	LoadingStatus: 'start',
 	addWordStatus: 'start',
+	searchStatus: 'start',
 	selectedTags: [],
 	page: 18
 } as TWords;
 
-export const searchWord = createAsyncThunk<IWord | any, string>(
+export const searchWord = createAsyncThunk<IWord[], string>(
 	'words/searchWord',
 	async (word) => {
+		return await axios({
+			method: 'GET',
+			url: `http://localhost:3004/words?word=${word}`
+		})
+			.then((data) => data.data)
+			.catch((err) => console.log(err));
+	}
+);
+
+export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
+	'words/searchWordbyInput',
+	async (word) => {
+		if (word === '') {
+			return 'empty';
+		}
 		return await axios({
 			method: 'GET',
 			url: `http://localhost:3004/words?word=${word}`
@@ -41,7 +57,7 @@ export const getAllWords = createAsyncThunk<IWord[], number>(
 	async (num = 0) => {
 		return await axios({
 			method: 'GET',
-			url: `http://localhost:3004/words?_start=${0}&_end=${num}`
+			url: `http://localhost:3004/words?_start=${num - 18}&_end=${num}`
 		})
 			.then((data) => data.data)
 			.catch((err) => console.log(err));
@@ -89,7 +105,9 @@ const wordsSlice = createSlice({
 			);
 		},
 		addPage: (state) => {
-			state.page += 18;
+			if (state.LoadingStatus !== 'error') {
+				state.page += 18;
+			}
 		}
 	},
 	extraReducers: (builder) => {
@@ -98,8 +116,12 @@ const wordsSlice = createSlice({
 				state.LoadingStatus = 'loading';
 			})
 			.addCase(getAllWords.fulfilled, (state, { payload }) => {
-				state.LoadingStatus = 'start';
-				wordAdapter.setAll(state, payload);
+				if (payload.length) {
+					state.LoadingStatus = 'start';
+					wordAdapter.addMany(state, payload);
+				} else {
+					state.LoadingStatus = 'error';
+				}
 			})
 			.addCase(getAllWords.rejected, (state) => {
 				state.LoadingStatus = 'error';
@@ -131,10 +153,27 @@ const wordsSlice = createSlice({
 				state.addWordStatus = 'start';
 			})
 			.addCase(searchWord.fulfilled, (state, { payload }) => {
-				if (payload[0]) {
+				if (payload.length) {
 					state.addWordStatus = 'error';
 				} else {
 					state.addWordStatus = 'start';
+				}
+			})
+			.addCase(searchWordbyInput.pending, (state) => {
+				state.searchStatus = 'loading';
+			})
+			.addCase(searchWordbyInput.fulfilled, (state, { payload }) => {
+				if (payload === 'empty') {
+					wordAdapter.removeAll(state);
+					state.searchStatus = 'start';
+				} else {
+					if (payload.length) {
+						wordAdapter.setAll(state, payload);
+						state.searchStatus = 'end';
+					} else {
+						wordAdapter.removeAll(state);
+						state.searchStatus = 'error';
+					}
 				}
 			});
 	}
