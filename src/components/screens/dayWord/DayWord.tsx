@@ -4,11 +4,9 @@ import Teg from '@/components/ui/teg';
 import Image from 'next/image';
 
 import Like from '@/assets/imgs/Like.svg';
-import DisLike from '@/assets/imgs/DisLike.svg';
-
 import styles from './dayWord.module.scss';
 import clsx from 'clsx';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IWord } from '@/interfaces/api.interface';
 import { dayWord } from './constant';
 
@@ -36,7 +34,7 @@ const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
 						<li className={styles.item_info}>
 							<h4>Теги</h4>
 							<div className={styles.tegs_content}>
-								{data.tegs.map((el, index) => (
+								{data.tags.map((el, index) => (
 									<Teg key={index} type={index % 2 === 0 ? 'pink' : 'blue'}>
 										{el.name}
 									</Teg>
@@ -60,13 +58,10 @@ const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
 						</div>
 					</div>
 				</div>
-
 				<ul className={styles.info_example}>
-					{data.example.map((el, key) => (
-						<li className={styles.list_example} key={key}>
-							<p className={styles.text_example}>{el}</p>
-						</li>
-					))}
+					<li className={styles.list_example} key={data.id}>
+						<p className={styles.text_example}>{data.example}</p>
+					</li>
 				</ul>
 			</div>
 		</>

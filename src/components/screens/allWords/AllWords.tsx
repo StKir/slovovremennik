@@ -4,7 +4,7 @@ import Teg from '@/components/ui/teg';
 import styles from './allWord.module.scss';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import Words from '@/components/ui/word';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
 	addPage,
@@ -40,7 +40,8 @@ const AllWords = () => {
 			: dispatch(selectTags(el));
 	};
 
-	const onSearch = (word: string) => {
+	const onSearch = (e: FormEvent<HTMLFormElement>, word: string) => {
+		e.preventDefault();
 		if (word.length) {
 			dispatch(
 				searchWordbyInput(word[0].toUpperCase() + word.slice(1).toLowerCase())
@@ -69,18 +70,17 @@ const AllWords = () => {
 				</div>
 
 				<div className={styles.word__content}>
-					<form className={styles.form_search_word}>
+					<form
+						className={styles.form_search_word}
+						onSubmit={(e) => onSearch(e, search)}
+					>
 						<MainInput
 							placeholder='Поиск'
 							typeTheme='secondary'
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
 						/>
-						<MainButton
-							size='small'
-							type='button'
-							onClick={() => onSearch(search)}
-						>
+						<MainButton size='small' type='submit'>
 							Поиск
 						</MainButton>
 					</form>
@@ -92,7 +92,6 @@ const AllWords = () => {
 					</div>
 					<div className={styles.more_btn}>
 						<MainButton
-							style={wordStatusSearch !== 'start' ? { display: 'none' } : {}}
 							size='small'
 							disabled={wordStatus === 'error' || wordStatus === 'loading'}
 							onClick={() => dispatch(addPage())}

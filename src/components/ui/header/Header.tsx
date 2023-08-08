@@ -12,6 +12,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 const Header: FC = () => {
 	const [menuMobile, setMenuMobile] = useState<boolean>(false);
 	const { pathname } = useRouter();
+	console.log(process.env.AUTH_CLIENT_SECRET);
+
 	return (
 		<header className={styles.header}>
 			<div className='container'>
