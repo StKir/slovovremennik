@@ -2,53 +2,75 @@ import { FC, useState } from 'react';
 import styles from './header.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import Logo from '@/assets/imgs/logo.png';
 import { pages } from '@/components/pages';
 import menuIcon from '@/assets/imgs/menuMobileIcon.svg';
 import menuIconClose from '@/assets/imgs/menuMobileIconClose.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header: FC = () => {
-	const [menuMobile, setMenuMobile] = useState<boolean>(false);
-	const { pathname } = useRouter();
-	console.log(process.env.AUTH_CLIENT_SECRET);
-
 	return (
 		<header className={styles.header}>
-			<div className='container'>
-				<nav className={styles.nav_wrapper}>
-					<Link href={'/'}>
-						<Image className={styles.logo} src={Logo} alt='Logo' />
-					</Link>
-					<RenderLinks pathname={pathname} />
-					<button className={styles.sign_in}>Войти</button>
-					<MobileMenu menuMobile={menuMobile} setMenuMobile={setMenuMobile} />
-				</nav>
-				<AnimatePresence>
-					{menuMobile && <MobileMenuOverlay pathname={pathname} />}
-				</AnimatePresence>
-			</div>
+			<Navigations />
 		</header>
 	);
 };
 
 type TPathNameProps = { pathname: string };
 
-const RenderLinks: FC<TPathNameProps> = ({ pathname }) => {
+const Navigations = () => {
+	'use client';
+	const [menuMobile, setMenuMobile] = useState<boolean>(false);
+	const pathname = usePathname();
+	const session = useSession();
+
 	return (
-		<ul className={styles.nav_links}>
-			{pages.map((el) => (
-				<li key={el.id}>
-					<Link
-						className={pathname === el.href ? styles.active_link : ''}
-						href={el.href}
-					>
-						{el.title}
-					</Link>
-				</li>
-			))}
-		</ul>
+		<div className='container'>
+			<nav className={styles.nav_wrapper}>
+				<Link href={'/'}>
+					<Image
+						priority={true}
+						className={styles.logo}
+						src={Logo}
+						alt='Logo'
+					/>
+				</Link>
+				<ul className={styles.nav_links}>
+					{pages.map((el) => (
+						<li key={el.id}>
+							<Link
+								className={pathname === el.href ? styles.active_link : ''}
+								href={el.href}
+							>
+								{el.title}
+							</Link>
+						</li>
+					))}
+				</ul>
+				<div className={styles.right_side_grid}>
+					{session?.data && <Link href='/profile'>Profile</Link>}
+					{session?.data ? (
+						<Link
+							href='#'
+							className={styles.sign_in}
+							onClick={() => signOut({ callbackUrl: '/' })}
+						>
+							Выйти
+						</Link>
+					) : (
+						<Link className={styles.sign_in} onClick={() => signIn()} href='#'>
+							Войти
+						</Link>
+					)}
+				</div>
+				<MobileMenu menuMobile={menuMobile} setMenuMobile={setMenuMobile} />
+			</nav>
+			<AnimatePresence>
+				{menuMobile && <MobileMenuOverlay pathname={pathname} />}
+			</AnimatePresence>
+		</div>
 	);
 };
 
