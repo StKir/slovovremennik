@@ -18,6 +18,7 @@ import Teg from '@/components/ui/teg';
 import Loading from '@/components/ui/loading/Loading';
 import uuid from 'react-uuid';
 import { Inputs, PropsComponents } from './types';
+import { useSession } from 'next-auth/react';
 
 const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const {
@@ -32,6 +33,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const [selectedTags, SetSelectedTag] = useState<ITags[]>([]);
 	const tags = useAppSelector((state) => state.words.tags);
 	const status = useAppSelector((state) => state.words.addWordStatus);
+	const session = useSession();
 
 	useEffect(() => {
 		!tags.length && dispatch(getAllTags());
@@ -77,7 +79,9 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 			data.word = data.word[0].toUpperCase() + data.word.slice(1).toLowerCase();
 			onReset();
 			dispatch(searchWord(data.word));
-			dispatch(addNewWord(data));
+			dispatch(
+				addNewWord({ ...data, author: session.data?.user?.name || 'Аноним' })
+			);
 		} else {
 			setError('tags', { type: 'custom', message: 'Укажите теги' });
 		}

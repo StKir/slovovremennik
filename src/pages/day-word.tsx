@@ -1,4 +1,4 @@
-import DayWord from '@/components/screens/dayWord/DayWord';
+import { DayWord } from '@/components/screens/dayWord/DayWord';
 import { NextPage } from 'next';
 import React from 'react';
 

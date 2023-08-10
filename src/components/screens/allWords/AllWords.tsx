@@ -16,6 +16,7 @@ import {
 	searchWordbyInput
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
+import Link from 'next/link';
 
 const AllWords = () => {
 	const [search, setSearch] = useState<string>('');
@@ -86,14 +87,21 @@ const AllWords = () => {
 					</form>
 					<div className={styles.word_list}>
 						{words.map((wordInfo) => (
-							<Words content={wordInfo} key={wordInfo.id} />
+							<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
+								<Words content={wordInfo} />
+							</Link>
 						))}
 						{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
 					</div>
 					<div className={styles.more_btn}>
 						<MainButton
 							size='small'
-							disabled={wordStatus === 'error' || wordStatus === 'loading'}
+							disabled={
+								wordStatus === 'error' ||
+								wordStatus === 'loading' ||
+								wordStatusSearch === 'error' ||
+								wordStatusSearch === 'end'
+							}
 							onClick={() => dispatch(addPage())}
 						>
 							Загрузить еще

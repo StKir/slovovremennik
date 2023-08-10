@@ -50,7 +50,21 @@ const Navigations = () => {
 					))}
 				</ul>
 				<div className={styles.right_side_grid}>
-					{session?.data && <Link href='/profile'>Profile</Link>}
+					{session?.data &&
+						(session.data.user?.image ? (
+							<Link className={styles.profile_img} href='/profile'>
+								<Image
+									width={40}
+									height={40}
+									src={session.data.user.image}
+									alt={session.data.user.name || 'profile'}
+								/>
+							</Link>
+						) : (
+							<Link className={styles.profile} href='/profile'>
+								P
+							</Link>
+						))}
 					{session?.data ? (
 						<Link
 							href='#'

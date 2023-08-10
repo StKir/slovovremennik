@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable jsx-a11y/alt-text */
 import Teg from '@/components/ui/teg';
 import Image from 'next/image';
 
@@ -89,7 +87,7 @@ const demoResponseForServer: ({ setState }: any) => void = ({ setState }) => {
 	}, 5000);
 };
 
-const DayWord = () => {
+export const DayWord = () => {
 	//Демо использование
 
 	const [state, setState] = useState<IDemo>({
@@ -102,11 +100,11 @@ const DayWord = () => {
 	}, []);
 
 	return (
-		<div className={styles.container}>
+		<div className='container'>
 			<h3 className={styles.name_page}>Слово дня</h3>
 			{<DemoLoadingContent data={state.data} loading={state.loading} />}
 		</div>
 	);
 };
 
-export default DayWord;
+export default RenderContentDayWord;

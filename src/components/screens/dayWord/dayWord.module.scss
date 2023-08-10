@@ -1,290 +1,280 @@
 @import './../../../styles/variable';
 
 .container {
-  * {
-    cursor: default;
-  }
-  @extend %container;
+	* {
+		cursor: default;
+	}
+	// @extend %container;
+}
+.name_page {
+	font-style: normal;
+	font-weight: 300;
+	font-size: 32px;
+	line-height: 110.5%;
+	color: #ffffff;
+}
 
-  .name_page {
-    font-style: normal;
-    font-weight: 300;
-    font-size: 32px;
-    line-height: 110.5%;
-    color: #ffffff;
-  }
+.main_title {
+	font-style: normal;
+	font-weight: 700;
+	font-size: 128px;
+	line-height: 157px;
+	color: #ffffff;
+	margin-bottom: 10px;
+}
 
-  .main_title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 128px;
-    line-height: 157px;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
+.main_direction {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 29px;
 
-  .main_direction {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 29px;
+	color: #ffffff;
+}
 
-    color: #ffffff;
-  }
+.info_block {
+	margin-top: 40px;
+	display: grid;
+	grid-template-columns: 1fr 771px;
+	gap: 0px 202px;
 
-  .info_block {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: 1fr 771px;
-    gap: 0px 202px;
+	.info_content {
+		.list_info {
+			ul,
+			li {
+				list-style: none;
+			}
+		}
+		.info_author {
+			font-style: normal;
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 110.5%;
+			color: #ffffff;
+			margin-top: 20px;
+		}
 
-    .info_content {
-      .list_info {
-        ul,
-        li {
-          list-style: none;
-        }
-      }
-      .info_author {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 16px;
-        line-height: 110.5%;
-        color: #ffffff;
-        margin-top: 20px;
-      }
+		.item_info {
+			h4 {
+				font-style: normal;
+				font-weight: 600;
+				font-size: 20px;
+				line-height: 110.5%;
+				color: #aeaeae;
+				margin-bottom: 15px;
+			}
+			p {
+				font-style: normal;
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 110.5%;
+				color: #ffffff;
+				margin-bottom: 20px;
+				color: #ffffff;
+			}
 
-      .item_info {
-        h4 {
-          font-style: normal;
-          font-weight: 600;
-          font-size: 20px;
-          line-height: 110.5%;
-          color: #aeaeae;
-          margin-bottom: 15px;
-        }
-        p {
-          font-style: normal;
-          font-weight: 400;
-          font-size: 20px;
-          line-height: 110.5%;
-          color: #ffffff;
-          margin-bottom: 20px;
-          color: #ffffff;
-        }
+			.tegs_content {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 5px 20px;
+			}
+		}
 
-        .tegs_content {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 5px 20px;
-        }
-      }
+		.likes_func {
+			margin-top: 20px;
+			display: flex;
+			width: fit-content;
+			justify-items: center;
+			align-items: center;
+			gap: 0px 10px;
+			padding: 5px 10px;
 
-      .likes_func {
-        margin-top: 20px;
-        display: flex;
-        width: fit-content;
-        justify-items: center;
-        align-items: center;
-        gap: 0px 10px;
-        padding: 5px 10px;
+			background: rgba(0, 0, 0, 0.19);
+			backdrop-filter: blur(7.5px);
+			border-radius: 7px;
 
-        background: rgba(0, 0, 0, 0.19);
-        backdrop-filter: blur(7.5px);
-        border-radius: 7px;
+			.like_count {
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 18px;
+				letter-spacing: 0em;
+				text-align: left;
+				color: #fff;
+			}
 
-        .like_count {
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 18px;
-          letter-spacing: 0em;
-          text-align: left;
-          color: #fff;
-        }
+			.btn_action {
+				height: 40px;
+				width: 42px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(0, 0, 0, 0.19);
+				backdrop-filter: blur(7.5px);
+				border-radius: 7px;
+				&.active {
+					background: #9e22ff;
+					transition: 0.4s ease all;
+				}
+				&:hover {
+					background: #9e22ff;
+					transition: 0.4s ease all;
+				}
+				&:active {
+					background: #9e22ff;
+					transition: 0.4s ease all;
+				}
+			}
+		}
+	}
 
-        .btn_action {
-          height: 40px;
-          width: 42px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(0, 0, 0, 0.19);
-          backdrop-filter: blur(7.5px);
-          border-radius: 7px;
-          &.active {
-            background: #9e22ff;
-            transition: 0.4s ease all;
-          }
-          &:hover {
-            background: #9e22ff;
-            transition: 0.4s ease all;
-          }
-          &:active {
-            background: #9e22ff;
-            transition: 0.4s ease all;
-          }
-        }
-      }
-    }
+	.info_example {
+		display: flex;
+		flex-direction: column;
+		gap: 15px 0px;
 
-    .info_example {
-      display: flex;
-      flex-direction: column;
-      gap: 15px 0px;
+		ul,
+		li {
+			list-style: none;
+		}
 
-      ul,
-      li {
-        list-style: none;
-      }
+		.list_example {
+			background: rgba(0, 0, 0, 0.19);
+			border-radius: 10px;
+			min-height: 62px;
+			display: flex;
+			align-items: center;
+			padding: 20px 10px;
+		}
 
-      .list_example {
-        background: rgba(0, 0, 0, 0.19);
-        border-radius: 10px;
-        min-height: 62px;
-        display: flex;
-        align-items: center;
-        padding: 20px 10px;
-      }
-
-      .text_example {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 110.5%;
-        color: #ffffff;
-      }
-    }
-  }
+		.text_example {
+			font-style: normal;
+			font-weight: 400;
+			font-size: 20px;
+			line-height: 110.5%;
+			color: #ffffff;
+		}
+	}
 }
 
 @include _1200 {
-  .container {
-    .main_title {
-      font-size: 88px;
-      font-weight: 700;
-      line-height: 108px;
-      letter-spacing: 0em;
-      text-align: left;
-    }
-    .main_direction {
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 24px;
-      letter-spacing: 0em;
-      text-align: left;
-    }
-    .info_author {
-      font-style: normal;
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 110.5%;
-    }
+	.main_title {
+		font-size: 88px;
+		font-weight: 700;
+		line-height: 108px;
+		letter-spacing: 0em;
+		text-align: left;
+	}
+	.main_direction {
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 24px;
+		letter-spacing: 0em;
+		text-align: left;
+	}
+	.info_author {
+		font-style: normal;
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 110.5%;
+	}
 
-    .info_block {
-      grid-template-columns: 1fr 475px;
-      gap: 0px 47px;
+	.info_block {
+		grid-template-columns: 1fr 475px;
+		gap: 0px 47px;
 
-      .item_info {
-        h4 {
-          font-style: normal;
-          font-weight: 600;
-          font-size: 20px;
-          line-height: 110.5%;
-        }
-        p {
-          font-family: 'Commissioner';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 20px;
-          line-height: 110.5%;
-        }
+		.item_info {
+			h4 {
+				font-style: normal;
+				font-weight: 600;
+				font-size: 20px;
+				line-height: 110.5%;
+			}
+			p {
+				font-family: 'Commissioner';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 110.5%;
+			}
 
-        .tegs_content {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 5px 20px;
-        }
-      }
+			.tegs_content {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 5px 20px;
+			}
+		}
 
-      .info_example {
-        .text_example {
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 110.5%;
-        }
-      }
+		.info_example {
+			.text_example {
+				font-style: normal;
+				font-weight: 400;
+				font-size: 16px;
+				line-height: 110.5%;
+			}
+		}
 
-      .likes_func {
-        margin-top: 25px;
-        .like {
-        }
-
-        .btn_action {
-        }
-      }
-    }
-  }
+		.likes_func {
+			margin-top: 25px;
+		}
+	}
 }
 
 @include _768 {
-  .container {
-    .main_title {
-      font-style: normal;
-      font-weight: 700;
-      font-size: 36px;
-      line-height: 44px;
-    }
-    .main_direction {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 22px;
-    }
-    .info_author {
-      font-style: normal;
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 110.5%;
-    }
+	.main_title {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 36px;
+		line-height: 44px;
+	}
+	.main_direction {
+		font-style: normal;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 22px;
+	}
+	.info_author {
+		font-style: normal;
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 110.5%;
+	}
 
-    .info_block {
-      grid-template-columns: 1fr;
-      gap: 20px 0px;
+	.info_block {
+		grid-template-columns: 1fr;
+		gap: 20px 0px;
 
-      .item_info {
-        h4 {
-          font-style: normal;
-          font-weight: 400;
-          font-size: 18px;
-          line-height: 110.5%;
-        }
-        p {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 18px;
-          line-height: 110.5%;
-        }
+		.item_info {
+			h4 {
+				font-style: normal;
+				font-weight: 400;
+				font-size: 18px;
+				line-height: 110.5%;
+			}
+			p {
+				font-style: normal;
+				font-weight: 500;
+				font-size: 18px;
+				line-height: 110.5%;
+			}
 
-        .tegs_content {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 5px 26px;
-        }
-      }
+			.tegs_content {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 5px 26px;
+			}
+		}
 
-      .info_example {
-        .text_example {
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 110.5%;
-        }
-      }
+		.info_example {
+			.text_example {
+				font-style: normal;
+				font-weight: 400;
+				font-size: 16px;
+				line-height: 110.5%;
+			}
+		}
 
-      .likes_func {
-        margin-top: 25px;
-      }
-    }
-  }
+		.likes_func {
+			margin-top: 25px;
+		}
+	}
 }
