@@ -1,5 +1,6 @@
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import styles from './mainScreen.module.scss';
+import Link from 'next/link';
 
 const MainScreen = () => {
 	return (
@@ -8,9 +9,11 @@ const MainScreen = () => {
 				<div className={styles.main_offer}>
 					<h1>Это словарь современных слов, который пишут прямо сейчас</h1>
 					<span>Приглашаем тебя внести вклад! </span>
-					<MainButton size='big' onClick={() => console.log('dsa')}>
-						Начать
-					</MainButton>
+					<Link href={'/all-words'}>
+						<MainButton size='big' onClick={() => console.log('dsa')}>
+							Начать
+						</MainButton>
+					</Link>
 				</div>
 			</div>
 		</section>

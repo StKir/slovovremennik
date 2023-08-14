@@ -32,7 +32,6 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 
 	const [selectedTags, SetSelectedTag] = useState<ITags[]>([]);
 	const tags = useAppSelector((state) => state.words.tags);
-	const status = useAppSelector((state) => state.words.addWordStatus);
 	const session = useSession();
 
 	useEffect(() => {
@@ -112,7 +111,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 								defaultValue=''
 								render={({ field }) => (
 									<MainInput
-										placeholder='Введие слово'
+										placeholder='Ваше слово'
 										name={field.name}
 										onChange={field.onChange}
 										value={field.value}
@@ -137,7 +136,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 								}}
 								render={({ field }) => (
 									<MainTextArea
-										placeholder='Описание'
+										placeholder='ну это там я не знаю, вот так и потом так, ну ты понял крч'
 										name={field.name}
 										onChange={field.onChange}
 										value={field.value}
@@ -161,7 +160,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 								defaultValue=''
 								render={({ field }) => (
 									<MainInput
-										placeholder='Введие пример'
+										placeholder='Сегодня я наступил на {ВАШЕ СЛОВО} и поранил ногу'
 										name={field.name}
 										onChange={field.onChange}
 										value={field.value}

@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const Id = () => {
-	console.log(Boolean(''));
-
 	const [word, SetWord] = useState<IWord>();
 	const pathname = usePathname();
 	useEffect(() => {
@@ -16,7 +14,7 @@ const Id = () => {
 			url: `http://localhost:3004/words?id=${pathname.slice(7)}`
 		})
 			.then((data) => SetWord(data.data[0]))
-			.catch((err) => err);
+			.catch((err) => console.log(err));
 	}, [pathname]);
 
 	return (

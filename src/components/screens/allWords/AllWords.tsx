@@ -4,7 +4,13 @@ import Teg from '@/components/ui/teg';
 import styles from './allWord.module.scss';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import Words from '@/components/ui/word';
-import { FormEvent, useEffect, useState } from 'react';
+import {
+	ChangeEvent,
+	FormEvent,
+	useCallback,
+	useEffect,
+	useState
+} from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
 	addPage,
@@ -19,7 +25,6 @@ import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
 
 const AllWords = () => {
-	const [search, setSearch] = useState<string>('');
 	const words = useAppSelector(filteredWords);
 	const tags = useAppSelector((state) => state.words.tags);
 	const page = useAppSelector((state) => state.words.page);
@@ -54,7 +59,7 @@ const AllWords = () => {
 	};
 
 	return (
-		<div className={styles.container}>
+		<div className='container'>
 			<h2>Все слова</h2>
 			<div className={styles.tegs_content}>
 				<h3 className={styles.tegs_title}>Теги:</h3>
@@ -69,22 +74,8 @@ const AllWords = () => {
 						</Teg>
 					))}
 				</div>
-
 				<div className={styles.word__content}>
-					<form
-						className={styles.form_search_word}
-						onSubmit={(e) => onSearch(e, search)}
-					>
-						<MainInput
-							placeholder='Поиск'
-							typeTheme='secondary'
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-						/>
-						<MainButton size='small' type='submit'>
-							Поиск
-						</MainButton>
-					</form>
+					<AllWordsForm onSearch={onSearch} />
 					<div className={styles.word_list}>
 						{words.map((wordInfo) => (
 							<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
@@ -110,6 +101,38 @@ const AllWords = () => {
 				</div>
 			</div>
 		</div>
+	);
+};
+
+type TSerach = {
+	onSearch: (e: FormEvent<HTMLFormElement>, word: string) => void;
+};
+
+const AllWordsForm = ({ onSearch }: TSerach) => {
+	const [search, setSearch] = useState<string>('');
+
+	const handleInputChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			setSearch(event.target.value);
+		},
+		[]
+	);
+
+	return (
+		<form
+			className={styles.form_search_word}
+			onSubmit={(e) => onSearch(e, search)}
+		>
+			<MainInput
+				placeholder='Поиск'
+				typeTheme='secondary'
+				value={search}
+				onChange={handleInputChange}
+			/>
+			<MainButton size='small' type='submit'>
+				Поиск
+			</MainButton>
+		</form>
 	);
 };
 
