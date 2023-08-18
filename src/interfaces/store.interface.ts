@@ -1,4 +1,4 @@
-import { ITags } from './api.interface';
+import { ITags, IWord } from './api.interface';
 
 export type TWords = {
 	entities: {};
@@ -9,4 +9,5 @@ export type TWords = {
 	selectedTags: ITags[];
 	searchStatus: 'start' | 'loading' | 'end' | 'error';
 	page: number;
+	dayWord: IWord;
 };
