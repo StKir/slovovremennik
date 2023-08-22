@@ -10,4 +10,28 @@
 		line-height: 24px;
 		color: #ffffff;
 	}
+	@media screen and (max-width: 1200px) {
+		h1 {
+			font-size: 48px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		a {
+			display: flex;
+			justify-content: center;
+		}
+		span {
+			text-align: center;
+		}
+		h1 {
+			font-size: 32px;
+			font-style: normal;
+			font-weight: 700;
+			text-align: center;
+			line-height: normal;
+		}
+	}
 }
