@@ -9,6 +9,7 @@ import menuIcon from '@/assets/imgs/menuMobileIcon.svg';
 import menuIconClose from '@/assets/imgs/menuMobileIconClose.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { Session } from 'next-auth';
 
 const Header: FC = () => {
 	return (
@@ -18,7 +19,11 @@ const Header: FC = () => {
 	);
 };
 
-type TPathNameProps = { pathname: string };
+type TPathNameProps = {
+	pathname: string;
+	data: Session | null;
+	setMenuMobile: (value: boolean) => void;
+};
 
 const Navigations = () => {
 	'use client';
@@ -82,7 +87,13 @@ const Navigations = () => {
 				<MobileMenu menuMobile={menuMobile} setMenuMobile={setMenuMobile} />
 			</nav>
 			<AnimatePresence>
-				{menuMobile && <MobileMenuOverlay pathname={pathname} />}
+				{menuMobile && (
+					<MobileMenuOverlay
+						pathname={pathname}
+						data={session.data}
+						setMenuMobile={setMenuMobile}
+					/>
+				)}
 			</AnimatePresence>
 		</div>
 	);
@@ -128,20 +139,36 @@ const MobileMenuOverlay: FC<TPathNameProps> = (props) => {
 						<Link
 							className={props.pathname === el.href ? styles.active_link : ''}
 							href={el.href}
+							onClick={() => props.setMenuMobile(false)}
 						>
 							{el.title}
 						</Link>
 					</motion.li>
 				))}
-				<motion.button
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: 20 }}
-					transition={{ duration: 0.7 }}
-					className={styles.sign_in}
-				>
-					Войти
-				</motion.button>
+				<Link href={'/profile'}>
+					<motion.button
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 20 }}
+						transition={{ duration: 0.7 }}
+						className={styles.sign_in}
+						onClick={() => props.setMenuMobile(false)}
+					>
+						Профиль
+					</motion.button>
+				</Link>
+				{props.data ? null : (
+					<motion.button
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 20 }}
+						transition={{ duration: 0.7 }}
+						className={styles.sign_in}
+						onClick={() => signIn()}
+					>
+						Войти
+					</motion.button>
+				)}
 			</ul>
 		</motion.div>
 	);

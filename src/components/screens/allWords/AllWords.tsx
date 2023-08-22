@@ -59,48 +59,50 @@ const AllWords = () => {
 	};
 
 	return (
-		<div className='container'>
-			<h2>Все слова</h2>
-			<div className={styles.tegs_content}>
-				<h3 className={styles.tegs_title}>Теги:</h3>
-				<div className={styles.list_tegs}>
-					{tags.map((el) => (
-						<Teg
-							type={selectedTags.includes(el) ? 'pink' : 'blue'}
-							key={el.id}
-							onClick={() => OnValidateTags(el)}
-						>
-							{el.name}
-						</Teg>
-					))}
-				</div>
-				<div className={styles.word__content}>
-					<AllWordsForm onSearch={onSearch} />
-					<div className={styles.word_list}>
-						{words.map((wordInfo) => (
-							<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
-								<Words content={wordInfo} />
-							</Link>
+		<section>
+			<div className='container'>
+				<h2>Все слова</h2>
+				<div className={styles.tegs_content}>
+					<h3 className={styles.tegs_title}>Теги:</h3>
+					<div className={styles.list_tegs}>
+						{tags.map((el) => (
+							<Teg
+								type={selectedTags.includes(el) ? 'pink' : 'blue'}
+								key={el.id}
+								onClick={() => OnValidateTags(el)}
+							>
+								{el.name}
+							</Teg>
 						))}
-						{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
 					</div>
-					<div className={styles.more_btn}>
-						<MainButton
-							size='small'
-							disabled={
-								wordStatus === 'error' ||
-								wordStatus === 'loading' ||
-								wordStatusSearch === 'error' ||
-								wordStatusSearch === 'end'
-							}
-							onClick={() => dispatch(addPage())}
-						>
-							Загрузить еще
-						</MainButton>
+					<div className={styles.word__content}>
+						<AllWordsForm onSearch={onSearch} />
+						<div className={styles.word_list}>
+							{words.map((wordInfo) => (
+								<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
+									<Words content={wordInfo} />
+								</Link>
+							))}
+							{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
+						</div>
+						<div className={styles.more_btn}>
+							<MainButton
+								size='small'
+								disabled={
+									wordStatus === 'error' ||
+									wordStatus === 'loading' ||
+									wordStatusSearch === 'error' ||
+									wordStatusSearch === 'end'
+								}
+								onClick={() => dispatch(addPage())}
+							>
+								Загрузить еще
+							</MainButton>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

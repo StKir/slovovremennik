@@ -42,6 +42,10 @@
 			}
 		}
 		@media screen and (max-width: 768px) {
+			.profile,
+			.profile_img {
+				display: none;
+			}
 			.nav_links {
 				display: none;
 			}

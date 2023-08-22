@@ -69,10 +69,12 @@ export const DayWord = () => {
 	const content = getPageContent();
 
 	return (
-		<div className='container'>
-			<h3 className={styles.name_page}>Слово дня</h3>
-			{content}
-		</div>
+		<section>
+			<div className='container'>
+				<h3 className={styles.name_page}>Слово дня</h3>
+				{content}
+			</div>
+		</section>
 	);
 };
 

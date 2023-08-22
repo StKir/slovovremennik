@@ -6,12 +6,15 @@
 	box-sizing: border-box;
 	font-family: 'Commissioner', sans-serif;
 }
-
+a {
+	text-decoration: none;
+}
 body {
 	background-image: url('../assets/imgs/MaskGroup.png');
 	z-index: 1;
 	background-color: #0e1238;
 	background-repeat: repeat-x;
+	background-size: cover;
 }
 
 .container {

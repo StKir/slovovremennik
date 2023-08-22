@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const MainScreen = () => {
 	return (
-		<section className='Main_section'>
+		<section>
 			<div className='container'>
 				<div className={styles.main_offer}>
 					<h1>Это словарь современных слов, который пишут прямо сейчас</h1>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './profile.module.scss';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { Session } from 'next-auth';
 import Link from 'next/link';
@@ -22,7 +22,11 @@ const Profile = () => {
 
 	const content = renderContent();
 
-	return <div className='container'>{content}</div>;
+	return (
+		<section>
+			<div className='container'>{content}</div>;
+		</section>
+	);
 };
 
 type TProfileSession = {
@@ -63,11 +67,7 @@ const ProfileError = () => {
 	return (
 		<div style={{ display: 'grid', justifyItems: 'center', gap: 15 }}>
 			<h2>Ой, кажется вы не зарегистрированы</h2>
-			<Link
-				href={
-					'/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Fprofile'
-				}
-			>
+			<Link href={'#'} onClick={() => signIn()}>
 				<MainButton size={'big'}>Войти</MainButton>
 			</Link>
 		</div>

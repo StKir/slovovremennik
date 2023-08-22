@@ -10,8 +10,10 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 		<>
 			<Provider store={store}>
 				<SessionProvider>
-					<Header />
-					{children}
+					<div style={{ minHeight: 'calc(100vh - 175px)' }}>
+						<Header />
+						{children}
+					</div>
 					<Footer />
 				</SessionProvider>
 			</Provider>
