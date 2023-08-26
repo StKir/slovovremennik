@@ -23,6 +23,7 @@ import {
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
+import { selectWord } from '@/store/settingsSlice';
 
 const AllWords = () => {
 	const words = useAppSelector(filteredWords);
@@ -79,8 +80,12 @@ const AllWords = () => {
 						<AllWordsForm onSearch={onSearch} />
 						<div className={styles.word_list}>
 							{words.map((wordInfo) => (
-								<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
-									<Words content={wordInfo} />
+								<Link
+									key={wordInfo.id}
+									onClick={() => dispatch(selectWord(wordInfo))}
+									href={`/words/${wordInfo.id}`}
+								>
+									<Words content={wordInfo} showDetails={false} />
 								</Link>
 							))}
 							{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}

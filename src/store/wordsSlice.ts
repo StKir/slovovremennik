@@ -22,8 +22,7 @@ const initialState = {
 	addWordStatus: 'start',
 	searchStatus: 'start',
 	selectedTags: [],
-	page: 18,
-	dayWord: null
+	page: 18
 } as unknown as TWords;
 
 export const searchWord = createAsyncThunk<IWord[], string>(
@@ -32,17 +31,6 @@ export const searchWord = createAsyncThunk<IWord[], string>(
 		return await axios({
 			method: 'GET',
 			url: `http://localhost:3004/words?word=${word}`
-		})
-			.then((data) => data.data)
-			.catch((err) => console.log(err));
-	}
-);
-export const getDayWord = createAsyncThunk<IWord>(
-	'words/getDayWord',
-	async () => {
-		return await axios({
-			method: 'GET',
-			url: `http://localhost:3004/dayword`
 		})
 			.then((data) => data.data)
 			.catch((err) => console.log(err));
@@ -187,13 +175,6 @@ const wordsSlice = createSlice({
 						state.searchStatus = 'error';
 					}
 				}
-			})
-			.addCase(getDayWord.pending, (state) => {
-				state.LoadingStatus = 'loading';
-			})
-			.addCase(getDayWord.fulfilled, (state, { payload }) => {
-				state.LoadingStatus = 'start';
-				state.dayWord = payload;
 			});
 	}
 });

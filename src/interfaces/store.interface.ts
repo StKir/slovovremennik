@@ -9,5 +9,10 @@ export type TWords = {
 	selectedTags: ITags[];
 	searchStatus: 'start' | 'loading' | 'end' | 'error';
 	page: number;
+};
+
+export type TSettings = {
+	LoadingStatus: 'idle' | 'loading' | 'error' | 'start';
 	dayWord: IWord;
+	selectedWord: IWord;
 };

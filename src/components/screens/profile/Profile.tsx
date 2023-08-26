@@ -10,8 +10,6 @@ import Words from '@/components/ui/word';
 
 const Profile = () => {
 	const { data } = useSession();
-	console.log(data);
-
 	const renderContent = () => {
 		if (data === null || data === undefined) {
 			return <ProfileError />;
@@ -54,7 +52,7 @@ const ProfilePage = ({ data }: TProfileSession) => {
 				) : (
 					<div className={styles.words_array}>
 						{wordsAuthor.map((wordInfo) => (
-							<Words content={wordInfo} key={wordInfo.id} />
+							<Words content={wordInfo} key={wordInfo.id} showDetails={true} />
 						))}
 					</div>
 				)}

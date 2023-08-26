@@ -24,14 +24,17 @@ const ShowWordWithInformation: React.FC<{
 	);
 };
 
-const Words: React.FC<{ content: IWord }> = ({ content }) => {
+const Words: React.FC<{ content: IWord; showDetails: boolean }> = ({
+	content,
+	showDetails
+}) => {
 	const [showWordInfo, setShowWordInfo] = useState(false);
 
 	const funcChangeShowInfo = () => {
 		setShowWordInfo(!showWordInfo);
 	};
 
-	if (!showWordInfo) {
+	if (!showWordInfo || showDetails === false) {
 		return (
 			<div className={styles.word} onClick={funcChangeShowInfo}>
 				{content.word}

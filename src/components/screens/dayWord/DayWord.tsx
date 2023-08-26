@@ -2,9 +2,8 @@ import Teg from '@/components/ui/teg';
 import styles from './dayWord.module.scss';
 import { useEffect, useState } from 'react';
 import { IWord } from '@/interfaces/api.interface';
-import { dayWord } from './constant';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { getDayWord } from '@/store/wordsSlice';
+import { getDayWord } from '@/store/settingsSlice';
 import Loading from '@/components/ui/loading/Loading';
 
 interface IDemo {
@@ -47,19 +46,20 @@ const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
 };
 
 export const DayWord = () => {
-	const word = useAppSelector((state) => state.words.dayWord);
-	const loading = useAppSelector((state) => state.words.LoadingStatus);
+	const word = useAppSelector((state) => state.settings.dayWord);
+	const loading = useAppSelector((state) => state.settings.LoadingStatus);
 	const dispatch = useAppDispatch();
 	useEffect(() => {
-		if (word === null) {
-			dispatch(getDayWord());
-		}
+		dispatch(getDayWord());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch]);
 
 	const getPageContent = () => {
 		if (loading === 'loading') {
 			return <Loading />;
+		}
+		if (loading === 'error') {
+			return <h2>Произошла ошибка</h2>;
 		}
 		if (word !== null) {
 			return <RenderContentDayWord data={word} />;
