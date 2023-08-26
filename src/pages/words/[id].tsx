@@ -18,9 +18,11 @@ const Id = () => {
 	}, [pathname]);
 
 	return (
-		<div className='container'>
-			{word ? <RenderContentDayWord data={word} /> : <h1>Загрузка</h1>}
-		</div>
+		<section>
+			<div className='container'>
+				{word ? <RenderContentDayWord data={word} /> : <h1>Загрузка</h1>}
+			</div>
+		</section>
 	);
 };
 
