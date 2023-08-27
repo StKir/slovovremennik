@@ -19,7 +19,8 @@ import {
 	getAllWords,
 	removeTags,
 	selectTags,
-	searchWordbyInput
+	searchWordbyInput,
+	setPage
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
@@ -32,6 +33,7 @@ const AllWords = () => {
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
+	const error = useAppSelector((state) => state.words.error);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -56,6 +58,7 @@ const AllWords = () => {
 		} else {
 			dispatch(searchWordbyInput(''));
 			dispatch(getAllWords(18));
+			dispatch(setPage(18));
 		}
 	};
 
@@ -78,6 +81,7 @@ const AllWords = () => {
 					</div>
 					<div className={styles.word__content}>
 						<AllWordsForm onSearch={onSearch} />
+						{error && <h2>{error}</h2>}
 						<div className={styles.word_list}>
 							{words.map((wordInfo) => (
 								<Link

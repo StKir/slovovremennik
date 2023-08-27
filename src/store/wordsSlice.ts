@@ -6,7 +6,7 @@ import {
 	createSelector
 } from '@reduxjs/toolkit';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { RootState } from './store';
 import { ITags, IWord } from '@/interfaces/api.interface';
@@ -19,6 +19,7 @@ const initialState = {
 	ids: [],
 	tags: [],
 	LoadingStatus: 'start',
+	error: null,
 	addWordStatus: 'start',
 	searchStatus: 'start',
 	selectedTags: [],
@@ -40,9 +41,7 @@ export const searchWord = createAsyncThunk<IWord[], string>(
 export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
 	'words/searchWordbyInput',
 	async (word) => {
-		if (word === '') {
-			return 'empty';
-		}
+		if (word === '') return 'empty';
 		return await axios({
 			method: 'GET',
 			url: `http://localhost:3004/words?word=${word}`
@@ -54,13 +53,12 @@ export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
 
 export const getAllWords = createAsyncThunk<IWord[], number>(
 	'words/getAllWords',
-	async (num = 0) => {
-		return await axios({
+	async (num = 18) => {
+		const res = await axios({
 			method: 'GET',
 			url: `http://localhost:3004/words?_start=${num - 18}&_end=${num}`
-		})
-			.then((data) => data.data)
-			.catch((err) => console.log(err));
+		});
+		return res.data;
 	}
 );
 
@@ -108,6 +106,9 @@ const wordsSlice = createSlice({
 			if (state.LoadingStatus !== 'error') {
 				state.page += 18;
 			}
+		},
+		setPage: (state, { payload }: PayloadAction<number>) => {
+			state.page = payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -123,8 +124,9 @@ const wordsSlice = createSlice({
 					state.LoadingStatus = 'error';
 				}
 			})
-			.addCase(getAllWords.rejected, (state) => {
+			.addCase(getAllWords.rejected, (state, { error }) => {
 				state.LoadingStatus = 'error';
+				state.error = error.message!;
 			})
 			.addCase(getAllTags.pending, (state) => {
 				state.LoadingStatus = 'loading';
@@ -203,6 +205,7 @@ export const filteredWords = createSelector(
 	}
 );
 
-export const { closeModalThx, selectTags, removeTags, addPage } = actions;
+export const { closeModalThx, selectTags, removeTags, addPage, setPage } =
+	actions;
 
 export default reducer;

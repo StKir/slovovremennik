@@ -9,6 +9,7 @@ export type TWords = {
 	selectedTags: ITags[];
 	searchStatus: 'start' | 'loading' | 'end' | 'error';
 	page: number;
+	error: string | null;
 };
 
 export type TSettings = {
