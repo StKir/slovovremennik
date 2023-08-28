@@ -6,7 +6,7 @@ import {
 	createSelector
 } from '@reduxjs/toolkit';
 
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 import { RootState } from './store';
 import { ITags, IWord } from '@/interfaces/api.interface';
@@ -19,7 +19,11 @@ const initialState = {
 	ids: [],
 	tags: [],
 	LoadingStatus: 'start',
-	error: null,
+	error: {
+		words: null,
+		tags: null,
+		search: null
+	},
 	addWordStatus: 'start',
 	searchStatus: 'start',
 	selectedTags: [],
@@ -78,12 +82,11 @@ export const addNewWord = createAsyncThunk<IWord, IWord>(
 export const getAllTags = createAsyncThunk<ITags[]>(
 	'words/getAllTags',
 	async () => {
-		return await axios({
+		const res = await axios({
 			method: 'GET',
 			url: `http://localhost:3004/tegs`
-		})
-			.then((data) => data.data)
-			.catch((err) => console.log(err));
+		});
+		return res.data;
 	}
 );
 
@@ -120,13 +123,15 @@ const wordsSlice = createSlice({
 				if (payload.length) {
 					state.LoadingStatus = 'start';
 					wordAdapter.addMany(state, payload);
+					state.error.words = null;
 				} else {
 					state.LoadingStatus = 'error';
+					state.error.words = null;
 				}
 			})
 			.addCase(getAllWords.rejected, (state, { error }) => {
 				state.LoadingStatus = 'error';
-				state.error = error.message!;
+				state.error.words = error.message!;
 			})
 			.addCase(getAllTags.pending, (state) => {
 				state.LoadingStatus = 'loading';
@@ -134,9 +139,11 @@ const wordsSlice = createSlice({
 			.addCase(getAllTags.fulfilled, (state, { payload }) => {
 				state.LoadingStatus = 'start';
 				state.tags = payload;
+				state.error.tags = null;
 			})
-			.addCase(getAllTags.rejected, (state) => {
+			.addCase(getAllTags.rejected, (state, { error }) => {
 				state.LoadingStatus = 'error';
+				state.error.tags = error.message!;
 			})
 			.addCase(addNewWord.pending, (state) => {
 				state.addWordStatus = 'loading';

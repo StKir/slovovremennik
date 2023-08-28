@@ -32,6 +32,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 
 	const [selectedTags, SetSelectedTag] = useState<ITags[]>([]);
 	const tags = useAppSelector((state) => state.words.tags);
+	const error = useAppSelector((state) => state.words.error);
 	const session = useSession();
 
 	useEffect(() => {
@@ -40,7 +41,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	}, [dispatch]);
 
 	const renderTags = (): JSX.Element | JSX.Element[] => {
-		if (!(typeof tags === 'undefined') && tags.length) {
+		if (tags && tags.length) {
 			return tags.map((el) => (
 				<Teg
 					onClick={() => selectTag(el)}
@@ -192,14 +193,18 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 						<label className={styles.form_label} htmlFor='teg'>
 							<span>Теги</span>
 							<span className={styles.error}>{errors.tags?.message}</span>
-							<Controller
-								name='tags'
-								control={control}
-								defaultValue={selectedTags}
-								render={({ field }) => (
-									<div className={styles.form_tags}>{tegsIcons}</div>
-								)}
-							/>
+							{error.tags ? (
+								<h2>Не удалось загрузить теги - {error.tags}</h2>
+							) : (
+								<Controller
+									name='tags'
+									control={control}
+									defaultValue={selectedTags}
+									render={({ field }) => (
+										<div className={styles.form_tags}>{tegsIcons}</div>
+									)}
+								/>
+							)}
 						</label>
 					</div>
 				</div>

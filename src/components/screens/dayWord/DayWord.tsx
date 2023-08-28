@@ -6,10 +6,6 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import { getDayWord } from '@/store/settingsSlice';
 import Loading from '@/components/ui/loading/Loading';
 
-interface IDemo {
-	data: IWord | undefined | null;
-	loading: boolean;
-}
 const RenderContentDayWord: React.FC<{ data: IWord }> = ({ data }) => {
 	return (
 		<>

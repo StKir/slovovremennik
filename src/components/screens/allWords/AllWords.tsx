@@ -24,7 +24,6 @@ import {
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
-import { selectWord } from '@/store/settingsSlice';
 
 const AllWords = () => {
 	const words = useAppSelector(filteredWords);
@@ -69,31 +68,36 @@ const AllWords = () => {
 				<div className={styles.tegs_content}>
 					<h3 className={styles.tegs_title}>Теги:</h3>
 					<div className={styles.list_tegs}>
-						{tags.map((el) => (
-							<Teg
-								type={selectedTags.includes(el) ? 'pink' : 'blue'}
-								key={el.id}
-								onClick={() => OnValidateTags(el)}
-							>
-								{el.name}
-							</Teg>
-						))}
+						{error.tags ? (
+							<h2>Не удалось загрузить теги - {error.tags}</h2>
+						) : (
+							tags.map((el) => (
+								<Teg
+									type={selectedTags.includes(el) ? 'pink' : 'blue'}
+									key={el.id}
+									onClick={() => OnValidateTags(el)}
+								>
+									{el.name}
+								</Teg>
+							))
+						)}
 					</div>
 					<div className={styles.word__content}>
 						<AllWordsForm onSearch={onSearch} />
-						{error && <h2>{error}</h2>}
-						<div className={styles.word_list}>
-							{words.map((wordInfo) => (
-								<Link
-									key={wordInfo.id}
-									onClick={() => dispatch(selectWord(wordInfo))}
-									href={`/words/${wordInfo.id}`}
-								>
-									<Words content={wordInfo} showDetails={false} />
-								</Link>
-							))}
-							{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
-						</div>
+						{error.words ? (
+							<h2>Не удалось загрузить слова - {error.words}</h2>
+						) : (
+							<div className={styles.word_list}>
+								{words.map((wordInfo) => (
+									<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
+										<Words content={wordInfo} showDetails={false} />
+									</Link>
+								))}
+								{wordStatusSearch === 'error' ? (
+									<h2>Такого слова нет</h2>
+								) : null}
+							</div>
+						)}
 						<div className={styles.more_btn}>
 							<MainButton
 								size='small'
