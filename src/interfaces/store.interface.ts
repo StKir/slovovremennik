@@ -9,11 +9,13 @@ export type TWords = {
 	selectedTags: ITags[];
 	searchStatus: 'start' | 'loading' | 'end' | 'error';
 	page: number;
-	error: {
-		words: null | string;
-		tags: null | string;
-		search: null | string;
-	};
+	error: TErrors;
+};
+
+export type TErrors = {
+	words: null | string;
+	tags: null | string;
+	search: null | string;
 };
 
 export type TSettings = {

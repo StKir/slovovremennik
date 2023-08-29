@@ -120,13 +120,19 @@ const wordsSlice = createSlice({
 				state.LoadingStatus = 'loading';
 			})
 			.addCase(getAllWords.fulfilled, (state, { payload }) => {
-				if (payload.length) {
-					state.LoadingStatus = 'start';
+				if (payload.length > 0 && payload.length < 18) {
 					wordAdapter.addMany(state, payload);
 					state.error.words = null;
-				} else {
 					state.LoadingStatus = 'error';
-					state.error.words = null;
+				} else {
+					if (payload.length) {
+						state.LoadingStatus = 'start';
+						wordAdapter.addMany(state, payload);
+						state.error.words = null;
+					} else {
+						state.LoadingStatus = 'error';
+						state.error.words = null;
+					}
 				}
 			})
 			.addCase(getAllWords.rejected, (state, { error }) => {

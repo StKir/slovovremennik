@@ -24,12 +24,11 @@ import {
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
+import { TErrors } from '@/interfaces/store.interface';
+import { PropsComponents } from '../addNewWord/types';
 
 const AllWords = () => {
-	const words = useAppSelector(filteredWords);
-	const tags = useAppSelector((state) => state.words.tags);
 	const page = useAppSelector((state) => state.words.page);
-	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 	const error = useAppSelector((state) => state.words.error);
@@ -37,16 +36,7 @@ const AllWords = () => {
 
 	useEffect(() => {
 		dispatch(getAllWords(page));
-		if (tags.length < 1) {
-			dispatch(getAllTags());
-		}
-	}, [tags.length, page, dispatch]);
-
-	const OnValidateTags = (el: ITags) => {
-		selectedTags.includes(el)
-			? dispatch(removeTags(el))
-			: dispatch(selectTags(el));
-	};
+	}, [page, dispatch]);
 
 	const onSearch = (e: FormEvent<HTMLFormElement>, word: string) => {
 		e.preventDefault();
@@ -66,38 +56,11 @@ const AllWords = () => {
 			<div className='container'>
 				<h2>Все слова</h2>
 				<div className={styles.tegs_content}>
-					<h3 className={styles.tegs_title}>Теги:</h3>
-					<div className={styles.list_tegs}>
-						{error.tags ? (
-							<h2>Не удалось загрузить теги - {error.tags}</h2>
-						) : (
-							tags.map((el) => (
-								<Teg
-									type={selectedTags.includes(el) ? 'pink' : 'blue'}
-									key={el.id}
-									onClick={() => OnValidateTags(el)}
-								>
-									{el.name}
-								</Teg>
-							))
-						)}
-					</div>
 					<div className={styles.word__content}>
+						<h3 className={styles.tegs_title}>Теги:</h3>
+						<TagsForm error={error} dispatch={dispatch} />
 						<AllWordsForm onSearch={onSearch} />
-						{error.words ? (
-							<h2>Не удалось загрузить слова - {error.words}</h2>
-						) : (
-							<div className={styles.word_list}>
-								{words.map((wordInfo) => (
-									<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
-										<Words content={wordInfo} showDetails={false} />
-									</Link>
-								))}
-								{wordStatusSearch === 'error' ? (
-									<h2>Такого слова нет</h2>
-								) : null}
-							</div>
-						)}
+						<WordList error={error} wordStatusSearch={wordStatusSearch} />
 						<div className={styles.more_btn}>
 							<MainButton
 								size='small'
@@ -109,7 +72,7 @@ const AllWords = () => {
 								}
 								onClick={() => dispatch(addPage())}
 							>
-								Загрузить еще
+								Перейти на {page / 18 + 1} страницу
 							</MainButton>
 						</div>
 					</div>
@@ -121,6 +84,47 @@ const AllWords = () => {
 
 type TSerach = {
 	onSearch: (e: FormEvent<HTMLFormElement>, word: string) => void;
+};
+
+type TTagsFormProps = {
+	error: TErrors;
+} & PropsComponents;
+
+type TWordListProps = { error: TErrors; wordStatusSearch: string };
+
+const TagsForm = ({ error, dispatch }: TTagsFormProps) => {
+	const selectedTags = useAppSelector((state) => state.words.selectedTags);
+	const tags = useAppSelector((state) => state.words.tags);
+
+	useEffect(() => {
+		if (tags.length < 1) {
+			dispatch(getAllTags());
+		}
+	}, [dispatch, tags.length]);
+
+	const OnValidateTags = (el: ITags) => {
+		selectedTags.includes(el)
+			? dispatch(removeTags(el))
+			: dispatch(selectTags(el));
+	};
+
+	return (
+		<div className={styles.list_tegs}>
+			{error.tags ? (
+				<h2>Не удалось загрузить теги - {error.tags}</h2>
+			) : (
+				tags.map((el) => (
+					<Teg
+						type={selectedTags.includes(el) ? 'pink' : 'blue'}
+						key={el.id}
+						onClick={() => OnValidateTags(el)}
+					>
+						{el.name}
+					</Teg>
+				))
+			)}
+		</div>
+	);
 };
 
 const AllWordsForm = ({ onSearch }: TSerach) => {
@@ -151,4 +155,24 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 	);
 };
 
+const WordList = ({ error, wordStatusSearch }: TWordListProps) => {
+	const words = useAppSelector(filteredWords);
+
+	return (
+		<>
+			{error.words ? (
+				<h2>Не удалось загрузить слова - {error.words}</h2>
+			) : (
+				<div className={styles.word_list}>
+					{words.map((wordInfo) => (
+						<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
+							<Words content={wordInfo} showDetails={false} />
+						</Link>
+					))}
+					{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
+				</div>
+			)}
+		</>
+	);
+};
 export default AllWords;
