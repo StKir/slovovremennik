@@ -29,8 +29,6 @@ import { PropsComponents } from '../addNewWord/types';
 
 const AllWords = () => {
 	const page = useAppSelector((state) => state.words.page);
-	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
-	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 	const error = useAppSelector((state) => state.words.error);
 	const dispatch = useAppDispatch();
 
@@ -60,21 +58,7 @@ const AllWords = () => {
 						<h3 className={styles.tegs_title}>Теги:</h3>
 						<TagsForm error={error} dispatch={dispatch} />
 						<AllWordsForm onSearch={onSearch} />
-						<WordList error={error} wordStatusSearch={wordStatusSearch} />
-						<div className={styles.more_btn}>
-							<MainButton
-								size='small'
-								disabled={
-									wordStatus === 'error' ||
-									wordStatus === 'loading' ||
-									wordStatusSearch === 'error' ||
-									wordStatusSearch === 'end'
-								}
-								onClick={() => dispatch(addPage())}
-							>
-								Перейти на {page / 18 + 1} страницу
-							</MainButton>
-						</div>
+						<WordList page={page} dispatch={dispatch} error={error} />
 					</div>
 				</div>
 			</div>
@@ -90,7 +74,10 @@ type TTagsFormProps = {
 	error: TErrors;
 } & PropsComponents;
 
-type TWordListProps = { error: TErrors; wordStatusSearch: string };
+type TWordListProps = {
+	error: TErrors;
+	page: number;
+} & PropsComponents;
 
 const TagsForm = ({ error, dispatch }: TTagsFormProps) => {
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
@@ -155,8 +142,10 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 	);
 };
 
-const WordList = ({ error, wordStatusSearch }: TWordListProps) => {
+const WordList = ({ error, dispatch, page }: TWordListProps) => {
 	const words = useAppSelector(filteredWords);
+	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
+	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 
 	return (
 		<>
@@ -172,6 +161,20 @@ const WordList = ({ error, wordStatusSearch }: TWordListProps) => {
 					{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
 				</div>
 			)}
+			<div className={styles.more_btn}>
+				<MainButton
+					size='small'
+					disabled={
+						wordStatus === 'error' ||
+						wordStatus === 'loading' ||
+						wordStatusSearch === 'error' ||
+						wordStatusSearch === 'end'
+					}
+					onClick={() => dispatch(addPage())}
+				>
+					Перейти на {page / 18 + 1} страницу
+				</MainButton>
+			</div>
 		</>
 	);
 };

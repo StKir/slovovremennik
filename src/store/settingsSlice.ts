@@ -49,13 +49,18 @@ const SettingsSlice = createSlice({
 			})
 			.addCase(getSelectedWord.pending, (state) => {
 				state.LoadingStatus = 'loading';
+				state.selectedWord = null!;
 			})
 			.addCase(getSelectedWord.rejected, (state) => {
 				state.LoadingStatus = 'error';
 			})
 			.addCase(getSelectedWord.fulfilled, (state, { payload }) => {
-				state.LoadingStatus = 'start';
-				state.selectedWord = payload[0];
+				if (payload[0]) {
+					state.LoadingStatus = 'start';
+					state.selectedWord = payload[0];
+				} else {
+					state.LoadingStatus = 'error';
+				}
 			});
 	}
 });
