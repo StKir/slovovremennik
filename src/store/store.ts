@@ -10,7 +10,10 @@ const rootRedusers = combineReducers({
 
 const store = configureStore({
 	reducer: rootRedusers,
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware(), // Redux-thunk встроен в стандартные мидлвееры!
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({ serializableCheck: false }),
+	// Redux-thunk встроен в стандартные мидлвееры!
+	// serializableCheck поставлен в false для предотвращения ошибки при записи totalCount (это максимальное кол-во записей words которое приходт с сервера в поле headers.[x-total-count])
 	devTools: process.env.NODE_ENV !== 'production'
 });
 

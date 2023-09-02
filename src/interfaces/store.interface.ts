@@ -10,6 +10,7 @@ export type TWords = {
 	searchStatus: 'start' | 'loading' | 'end' | 'error';
 	page: number;
 	error: TErrors;
+	totalCount: number;
 };
 
 export type TErrors = {

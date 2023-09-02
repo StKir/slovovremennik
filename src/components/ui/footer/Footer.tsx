@@ -11,7 +11,7 @@ const Footer: FC = () => {
 			<div className='container'>
 				<div className={styles.footer_wrp}>
 					<Link href={'/'}>
-						<Image src={Logo} alt='Logo' />
+						<Image src={Logo} alt='Logo' priority={true} />
 					</Link>
 					<span className={styles.info_autor}>
 						Сервис разработан для портфолио

@@ -6,7 +6,7 @@ import {
 	createSelector
 } from '@reduxjs/toolkit';
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { RootState } from './store';
 import { ITags, IWord } from '@/interfaces/api.interface';
@@ -27,7 +27,8 @@ const initialState = {
 	addWordStatus: 'start',
 	searchStatus: 'start',
 	selectedTags: [],
-	page: 18
+	page: 1,
+	totalCount: 0
 } as unknown as TWords;
 
 export const searchWord = createAsyncThunk<IWord[], string>(
@@ -55,14 +56,14 @@ export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
 	}
 );
 
-export const getAllWords = createAsyncThunk<IWord[], number>(
+export const getAllWords = createAsyncThunk<AxiosResponse<any, any>, number>(
 	'words/getAllWords',
-	async (num = 18) => {
+	async (num = 1) => {
 		const res = await axios({
 			method: 'GET',
-			url: `http://localhost:3004/words?_start=${num - 18}&_end=${num}`
+			url: `http://localhost:3004/words?_limit=20&_page=${num}`
 		});
-		return res.data;
+		return res;
 	}
 );
 
@@ -107,7 +108,7 @@ const wordsSlice = createSlice({
 		},
 		addPage: (state) => {
 			if (state.LoadingStatus !== 'error') {
-				state.page += 18;
+				state.page += 1;
 			}
 		},
 		setPage: (state, { payload }: PayloadAction<number>) => {
@@ -120,14 +121,18 @@ const wordsSlice = createSlice({
 				state.LoadingStatus = 'loading';
 			})
 			.addCase(getAllWords.fulfilled, (state, { payload }) => {
-				if (payload.length > 0 && payload.length < 18) {
-					wordAdapter.addMany(state, payload);
+				const res = payload.data;
+				const total = payload.headers['x-total-count'];
+				state.totalCount = Number(total);
+
+				if (res.length > 0 && res.length < 20) {
+					wordAdapter.addMany(state, res);
 					state.error.words = null;
 					state.LoadingStatus = 'error';
 				} else {
-					if (payload.length) {
+					if (res.length) {
 						state.LoadingStatus = 'start';
-						wordAdapter.addMany(state, payload);
+						wordAdapter.addMany(state, res);
 						state.error.words = null;
 					} else {
 						state.LoadingStatus = 'error';

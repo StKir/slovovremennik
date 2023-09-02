@@ -44,8 +44,8 @@ const AllWords = () => {
 			);
 		} else {
 			dispatch(searchWordbyInput(''));
-			dispatch(getAllWords(18));
-			dispatch(setPage(18));
+			dispatch(getAllWords(1));
+			dispatch(setPage(1));
 		}
 	};
 
@@ -146,6 +146,7 @@ const WordList = ({ error, dispatch, page }: TWordListProps) => {
 	const words = useAppSelector(filteredWords);
 	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
+	const totalCount = useAppSelector((state) => state.words.totalCount);
 
 	return (
 		<>
@@ -168,11 +169,14 @@ const WordList = ({ error, dispatch, page }: TWordListProps) => {
 						wordStatus === 'error' ||
 						wordStatus === 'loading' ||
 						wordStatusSearch === 'error' ||
-						wordStatusSearch === 'end'
+						wordStatusSearch === 'end' ||
+						words.length === totalCount
 					}
 					onClick={() => dispatch(addPage())}
 				>
-					Перейти на {page / 18 + 1} страницу
+					{words.length !== totalCount
+						? `Перейти на ${page + 1} страницу из ${Math.ceil(totalCount / 20)}`
+						: 'Конец'}
 				</MainButton>
 			</div>
 		</>

@@ -10,6 +10,7 @@ const Id = () => {
 	const params = usePathname();
 	const word = useAppSelector((state) => state.settings.selectedWord);
 	const status = useAppSelector((state) => state.settings.LoadingStatus);
+
 	useEffect(() => {
 		params && dispath(getSelectedWord(params.slice(7)));
 	}, [dispath, params]);
@@ -26,7 +27,6 @@ const Id = () => {
 	};
 
 	const content = renderContent(status);
-	console.log(word);
 
 	return (
 		<section>
