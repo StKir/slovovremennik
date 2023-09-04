@@ -709,6 +709,46 @@
       ],
       "id": "eda56baa-ef16-2845-3960-340bc3cb5fa0",
       "author": "Кирилл Струков"
+    },
+    {
+      "word": "Кофе",
+      "description": "sdfsdfsdf",
+      "example": "sdfsdfsdfsd",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        },
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "56d3328e-7132-0e23-982a-680d141fc04f",
+      "author": "Аноним"
+    },
+    {
+      "word": "Gegerg",
+      "description": "ergergerger",
+      "example": "rgergerg",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 10,
+          "name": "Метаирония"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "id": "84d63b6c-7889-8acb-3e77-c324f7a7af26",
+      "author": "Аноним"
     }
   ],
   "tegs": [

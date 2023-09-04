@@ -20,7 +20,8 @@ import {
 	removeTags,
 	selectTags,
 	searchWordbyInput,
-	setPage
+	setPage,
+	selectAll
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
@@ -43,7 +44,7 @@ const AllWords = () => {
 				searchWordbyInput(word[0].toUpperCase() + word.slice(1).toLowerCase())
 			);
 		} else {
-			dispatch(searchWordbyInput(''));
+			dispatch(searchWordbyInput('')); //Обнуляем лист слов
 			dispatch(getAllWords(1));
 			dispatch(setPage(1));
 		}
@@ -144,9 +145,19 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 
 const WordList = ({ error, dispatch, page }: TWordListProps) => {
 	const words = useAppSelector(filteredWords);
+	const Allwords = useAppSelector(selectAll);
 	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 	const totalCount = useAppSelector((state) => state.words.totalCount);
+
+	const disabledBtn = () =>
+		wordStatus === 'error' ||
+		wordStatus === 'loading' ||
+		wordStatusSearch === 'error' ||
+		wordStatusSearch === 'end' ||
+		Allwords.length === totalCount;
+
+	const disabledBtnStatus = disabledBtn();
 
 	return (
 		<>
@@ -165,16 +176,10 @@ const WordList = ({ error, dispatch, page }: TWordListProps) => {
 			<div className={styles.more_btn}>
 				<MainButton
 					size='small'
-					disabled={
-						wordStatus === 'error' ||
-						wordStatus === 'loading' ||
-						wordStatusSearch === 'error' ||
-						wordStatusSearch === 'end' ||
-						words.length === totalCount
-					}
+					disabled={disabledBtnStatus}
 					onClick={() => dispatch(addPage())}
 				>
-					{words.length !== totalCount
+					{Allwords.length < totalCount
 						? `Перейти на ${page + 1} страницу из ${Math.ceil(totalCount / 20)}`
 						: 'Конец'}
 				</MainButton>
