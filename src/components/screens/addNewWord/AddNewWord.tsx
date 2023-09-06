@@ -19,6 +19,7 @@ import Loading from '@/components/ui/loading/Loading';
 import uuid from 'react-uuid';
 import { Inputs, PropsComponents } from './types';
 import { useSession } from 'next-auth/react';
+import { wordApi } from '@/services/WordServices';
 
 const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const {
@@ -34,6 +35,8 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const tags = useAppSelector((state) => state.words.tags);
 	const error = useAppSelector((state) => state.words.error);
 	const session = useSession();
+
+	const [createNewWord, {}] = wordApi.useCreateNewWordMutation();
 
 	useEffect(() => {
 		!tags.length && dispatch(getAllTags());
@@ -79,6 +82,7 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 			data.word = data.word[0].toUpperCase() + data.word.slice(1).toLowerCase();
 			onReset();
 			dispatch(searchWord(data.word));
+			createNewWord({ ...data, author: session.data?.user?.name || 'Аноним' });
 			dispatch(
 				addNewWord({ ...data, author: session.data?.user?.name || 'Аноним' })
 			);

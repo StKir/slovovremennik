@@ -749,6 +749,126 @@
       ],
       "id": "84d63b6c-7889-8acb-3e77-c324f7a7af26",
       "author": "Аноним"
+    },
+    {
+      "word": "Dddddddd",
+      "description": "dddddddddddddd",
+      "example": "dddddddddddddddd",
+      "speech": "Существительное",
+      "tags": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "id": "ae49afef-b29a-0e26-3ea4-1d8314ccb386",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "New word",
+      "description": "asdsadasda",
+      "example": "asdsadasd",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 4,
+          "name": "Культура"
+        }
+      ],
+      "id": "792b5cf9-10fc-89ec-5138-f3b037c8017a",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Gfg",
+      "description": "gfdggdfgdf",
+      "example": "gdfgd",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "b1750669-fb97-2c4a-12db-33217856ba12",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Fgwdgrg",
+      "description": "ergergergergere",
+      "example": "gergergergerger",
+      "speech": "Наречие",
+      "tags": [
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "id": "24554776-9d6d-c933-bb40-d7ad6773d722",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "11111111111111111111",
+      "description": "1111111111111111111111",
+      "example": "11111111111111111111111111111111111111",
+      "speech": "Числительное",
+      "tags": [
+        {
+          "id": 6,
+          "name": "IT"
+        }
+      ],
+      "id": "54701064-1a07-6905-e102-0651616a2cde",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Dddqsadas",
+      "description": "saddadasdasdas",
+      "example": "dasdasdasda",
+      "speech": "Числительное",
+      "tags": [
+        {
+          "id": 8,
+          "name": "Жаргонизмы"
+        }
+      ],
+      "id": "621e21e4-736b-173d-ce55-f21d037659ec",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "New new",
+      "description": "NEW NEW NEW",
+      "example": "NEWNEWNEWNENWE",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 6,
+          "name": "IT"
+        }
+      ],
+      "id": "2915a413-29e3-7fcf-f472-00e9ca2476f0",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Slova",
+      "description": "SLOVASLOVASLOVASLOVASLOVA",
+      "example": "SLOVASLOVASLOVASLOVASLOVA",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "2535e099-36d4-0af2-0260-a74a3bcf6a7c",
+      "author": "Кирилл Струков"
     }
   ],
   "tegs": [
