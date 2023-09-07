@@ -31,15 +31,10 @@ import { wordApi } from '@/services/WordServices';
 import Loading from '@/components/ui/loading/Loading';
 
 const AllWords = () => {
-	const page = useAppSelector((state) => state.words.page);
 	const error = useAppSelector((state) => state.words.error);
 	const dispatch = useAppDispatch();
 
-	// useEffect(() => {
-	// 	dispatch(getAllWords(page));
-	// }, [page, dispatch]);
-
-	const onSearch = (e: FormEvent<HTMLFormElement>, word: string) => {
+	const onSearch = (e: FormEvent<HTMLFormElement>, word: string): void => {
 		e.preventDefault();
 		if (word.length) {
 			dispatch(
@@ -61,7 +56,7 @@ const AllWords = () => {
 						<h3 className={styles.tegs_title}>Теги:</h3>
 						<TagsForm error={error} dispatch={dispatch} />
 						<AllWordsForm onSearch={onSearch} />
-						<WordList page={page} dispatch={dispatch} />
+						<WordList dispatch={dispatch} />
 					</div>
 				</div>
 			</div>
@@ -75,11 +70,6 @@ type TSerach = {
 
 type TTagsFormProps = {
 	error: TErrors;
-} & PropsComponents;
-
-type TWordListProps = {
-	// error: TErrors;
-	page: number;
 } & PropsComponents;
 
 const TagsForm = ({ error, dispatch }: TTagsFormProps) => {
@@ -145,36 +135,29 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 	);
 };
 
-const WordList = ({ dispatch, page }: TWordListProps) => {
-	// const words = useAppSelector(filteredWords);
-	// const Allwords = useAppSelector(selectAll);
-	const wordStatus = useAppSelector((state) => state.words.LoadingStatus);
+const WordList = ({ dispatch }: PropsComponents) => {
+	const page = useAppSelector((state) => state.words.page);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
-	const totalCount = useAppSelector((state) => state.words.totalCount);
-	const {
-		data: words,
-		error,
-		isLoading,
-		isError
-	} = wordApi.useGetAllWordsQuery(page);
+	const { data: words, error, isLoading } = wordApi.useGetAllWordsQuery(page);
 
 	const totalWords = words ? words.totalCount : 0;
 
-	const disabledBtn = () =>
-		wordStatus === 'error' ||
-		wordStatus === 'loading' ||
-		wordStatusSearch === 'error' ||
-		wordStatusSearch === 'end' ||
-		isError ||
-		page === totalWords / 20;
+	const getArrayPage = (total: number) => {
+		const arrayPage: number[] = [];
+		for (let i = 0; i <= total / 20; i++) arrayPage.push(i);
+		return arrayPage;
+	};
 
-	const disabledBtnStatus = disabledBtn();
+	const pagesPagination = getArrayPage(totalWords);
 
 	return (
 		<>
 			{isLoading && <Loading />}
 			{error ? (
-				<h2>Не удалось загрузить слова</h2>
+				<h2>
+					Не удалось загрузить слова{' '}
+					{'status' in error ? error.status : error.message}
+				</h2>
 			) : (
 				<div className={styles.word_list}>
 					{words &&
@@ -187,17 +170,15 @@ const WordList = ({ dispatch, page }: TWordListProps) => {
 				</div>
 			)}
 			<div className={styles.more_btn}>
-				<MainButton
-					size='small'
-					disabled={disabledBtnStatus}
-					onClick={() => dispatch(addPage())}
-				>
-					{words && words.apiResponse.length < words.totalCount
-						? `Перейти на ${page + 1} страницу из ${Math.ceil(
-								words.totalCount / 20
-						  )}`
-						: 'Конец'}
-				</MainButton>
+				{pagesPagination.map((i) => (
+					<MainButton
+						key={i}
+						size='small'
+						onClick={() => dispatch(setPage(i + 1))}
+					>
+						{i + 1}
+					</MainButton>
+				))}
 			</div>
 		</>
 	);
