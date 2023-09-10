@@ -8,15 +8,12 @@ import {
 
 import axios, { AxiosResponse } from 'axios';
 
-import { RootState } from './store';
+import { RootState, useAppSelector } from './store';
 import { ITags, IWord } from '@/interfaces/api.interface';
 import { TWords } from '@/interfaces/store.interface';
 
-const wordAdapter = createEntityAdapter<IWord>();
-
 const initialState = {
-	entities: {},
-	ids: [],
+	searchWord: null,
 	tags: [],
 	LoadingStatus: 'start',
 	error: {
@@ -43,40 +40,15 @@ export const searchWord = createAsyncThunk<IWord[], string>(
 	}
 );
 
-export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
+export const searchWordbyInput = createAsyncThunk<IWord | 'empty', string>(
 	'words/searchWordbyInput',
 	async (word) => {
 		if (word === '') return 'empty';
-		return await axios({
-			method: 'GET',
-			url: `http://localhost:3004/words?word=${word}`
-		})
-			.then((data) => data.data)
-			.catch((err) => console.log(err));
-	}
-);
-
-export const getAllWords = createAsyncThunk<AxiosResponse<any, any>, number>(
-	'words/getAllWords',
-	async (num = 1) => {
 		const res = await axios({
 			method: 'GET',
-			url: `http://localhost:3004/words?_limit=20&_page=${num}`
+			url: `http://localhost:3004/words?word=${word}`
 		});
-		return res;
-	}
-);
-
-export const addNewWord = createAsyncThunk<IWord, IWord>(
-	'words/addNewWord',
-	async (word) => {
-		return await axios({
-			method: 'POST',
-			url: 'http://localhost:3004/words',
-			data: { ...word }
-		})
-			.then((data) => data.data)
-			.catch((err) => console.log(err));
+		return res.data[0];
 	}
 );
 
@@ -117,33 +89,6 @@ const wordsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getAllWords.pending, (state) => {
-				state.LoadingStatus = 'loading';
-			})
-			.addCase(getAllWords.fulfilled, (state, { payload }) => {
-				const res = payload.data;
-				const total = payload.headers['x-total-count'];
-				state.totalCount = Number(total);
-
-				if (res.length > 0 && res.length < 20) {
-					wordAdapter.addMany(state, res);
-					state.error.words = null;
-					state.LoadingStatus = 'error';
-				} else {
-					if (res.length) {
-						state.LoadingStatus = 'start';
-						wordAdapter.addMany(state, res);
-						state.error.words = null;
-					} else {
-						state.LoadingStatus = 'error';
-						state.error.words = null;
-					}
-				}
-			})
-			.addCase(getAllWords.rejected, (state, { error }) => {
-				state.LoadingStatus = 'error';
-				state.error.words = error.message!;
-			})
 			.addCase(getAllTags.pending, (state) => {
 				state.LoadingStatus = 'loading';
 			})
@@ -155,19 +100,6 @@ const wordsSlice = createSlice({
 			.addCase(getAllTags.rejected, (state, { error }) => {
 				state.LoadingStatus = 'error';
 				state.error.tags = error.message!;
-			})
-			.addCase(addNewWord.pending, (state) => {
-				state.addWordStatus = 'loading';
-			})
-			.addCase(addNewWord.rejected, (state) => {
-				state.addWordStatus = 'error';
-			})
-			.addCase(addNewWord.fulfilled, (state, { payload }) => {
-				state.LoadingStatus = 'start';
-				if (state.addWordStatus !== 'error') {
-					state.addWordStatus = 'added';
-					wordAdapter.addOne(state, payload);
-				}
 			})
 			.addCase(searchWord.rejected, (state) => {
 				state.addWordStatus = 'start';
@@ -184,14 +116,13 @@ const wordsSlice = createSlice({
 			})
 			.addCase(searchWordbyInput.fulfilled, (state, { payload }) => {
 				if (payload === 'empty') {
-					wordAdapter.removeAll(state);
 					state.searchStatus = 'start';
 				} else {
-					if (payload.length) {
-						wordAdapter.setAll(state, payload);
+					if (payload) {
+						state.searchWord = payload;
 						state.searchStatus = 'end';
 					} else {
-						wordAdapter.removeAll(state);
+						state.searchWord = null!;
 						state.searchStatus = 'error';
 					}
 				}
@@ -201,27 +132,24 @@ const wordsSlice = createSlice({
 
 const { reducer, actions } = wordsSlice;
 
-export const { selectAll } = wordAdapter.getSelectors<RootState>(
-	(state) => state.words
-);
+// export const filteredWords = createSelector(
+// 	[
+// 		(state) => state.wordsApi.endpoints.getAllWords(),
+// 		(state) => state.words.selectedTags
+// 	],
+// 	(words, selectedTags: ITags[]) => {
+// 		if (!selectedTags.length) return words;
 
-export const filteredWords = createSelector(
-	[selectAll, (state) => state.words.selectedTags],
-	(words, selectedTags: ITags[]) => {
-		if (!selectedTags.length) {
-			return words;
-		}
-		const idArray = selectedTags.map((el) => {
-			return el.id;
-		});
-		return words.filter((el) => {
-			const tagsIdArray = el.tags.map((el) => {
-				return el.id;
-			});
-			return tagsIdArray.some((id) => idArray.includes(id));
-		});
-	}
-);
+// 		const idArray = selectedTags.map((el) => el.id);
+
+// 		return words.filter((el) => {
+// 			const tagsIdArray = el.tags.map((el) => {
+// 				return el.id;
+// 			});
+// 			return tagsIdArray.some((id) => idArray.includes(id));
+// 		});
+// 	}
+// );
 
 export const { closeModalThx, selectTags, removeTags, addPage, setPage } =
 	actions;

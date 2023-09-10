@@ -9,19 +9,17 @@ import {
 	FormEvent,
 	useCallback,
 	useEffect,
+	useMemo,
 	useState
 } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
 	addPage,
-	filteredWords,
 	getAllTags,
-	getAllWords,
 	removeTags,
 	selectTags,
 	searchWordbyInput,
-	setPage,
-	selectAll
+	setPage
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
@@ -42,8 +40,6 @@ const AllWords = () => {
 			);
 		} else {
 			dispatch(searchWordbyInput('')); //Обнуляем лист слов
-			dispatch(getAllWords(1));
-			dispatch(setPage(1));
 		}
 	};
 
@@ -138,9 +134,8 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 const WordList = ({ dispatch }: PropsComponents) => {
 	const page = useAppSelector((state) => state.words.page);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
+	const wordSearch = useAppSelector((state) => state.words.searchWord);
 	const { data: words, error, isLoading } = wordApi.useGetAllWordsQuery(page);
-
-	const totalWords = words ? words.totalCount : 0;
 
 	const getArrayPage = (total: number) => {
 		const arrayPage: number[] = [];
@@ -148,7 +143,26 @@ const WordList = ({ dispatch }: PropsComponents) => {
 		return arrayPage;
 	};
 
-	const pagesPagination = getArrayPage(totalWords);
+	const pagesPagination = useMemo(
+		() => getArrayPage(words ? words.totalCount : 0),
+		[words]
+	);
+
+	if (wordStatusSearch === 'end') {
+		return (
+			<Link href={`/words/${wordSearch.id}`}>
+				<Words content={wordSearch} showDetails={false} />
+			</Link>
+		);
+	}
+
+	if (wordStatusSearch === 'error') {
+		return <h2>Такого слова у нас нет</h2>;
+	}
+
+	if (wordStatusSearch === 'loading') {
+		return <Loading />;
+	}
 
 	return (
 		<>
@@ -166,14 +180,13 @@ const WordList = ({ dispatch }: PropsComponents) => {
 								<Words content={wordInfo} showDetails={false} />
 							</Link>
 						))}
-					{wordStatusSearch === 'error' ? <h2>Такого слова нет</h2> : null}
 				</div>
 			)}
 			<div className={styles.more_btn}>
 				{pagesPagination.map((i) => (
 					<MainButton
 						key={i}
-						size='small'
+						size={page === i + 1 ? 'big' : 'small'}
 						onClick={() => dispatch(setPage(i + 1))}
 					>
 						{i + 1}

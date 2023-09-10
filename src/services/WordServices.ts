@@ -25,11 +25,6 @@ export const wordApi = createApi({
 			},
 			providesTags: (result) => ['Word']
 		}),
-		searchWord: build.query<IWord[], string>({
-			query: (word) => ({
-				url: `/words?word=${word}`
-			})
-		}),
 		createNewWord: build.mutation<IWord, IWord>({
 			query: (word) => ({
 				url: `/words`,

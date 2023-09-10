@@ -83,9 +83,6 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 			onReset();
 			dispatch(searchWord(data.word));
 			createNewWord({ ...data, author: session.data?.user?.name || 'Аноним' });
-			dispatch(
-				addNewWord({ ...data, author: session.data?.user?.name || 'Аноним' })
-			);
 		} else {
 			setError('tags', { type: 'custom', message: 'Укажите теги' });
 		}

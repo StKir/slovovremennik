@@ -869,6 +869,24 @@
       ],
       "id": "2535e099-36d4-0af2-0260-a74a3bcf6a7c",
       "author": "Кирилл Струков"
+    },
+    {
+      "word": "Test test",
+      "description": "testtesttesttesttest test test test test test test",
+      "example": " test test test test test test test test",
+      "speech": "Числительное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 4,
+          "name": "Культура"
+        }
+      ],
+      "id": "359fef5c-0aef-1cd5-78ae-3afe5b0eb83c",
+      "author": "Кирилл Струков"
     }
   ],
   "tegs": [
