@@ -7,21 +7,16 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect, useState } from 'react';
-import {
-	addNewWord,
-	closeModalThx,
-	getAllTags,
-	searchWord
-} from '@/store/wordsSlice';
+import { getAllTags, searchWord } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
 import Loading from '@/components/ui/loading/Loading';
 import uuid from 'react-uuid';
-import { Inputs, PropsComponents } from './types';
+import { Inputs, TFormAdded, TModalForm } from './types';
 import { useSession } from 'next-auth/react';
 import { wordApi } from '@/services/WordServices';
 
-const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
+const FormAddWord: React.FC<TFormAdded> = ({ dispatch, createNewWord }) => {
 	const {
 		handleSubmit,
 		control,
@@ -35,8 +30,6 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	const tags = useAppSelector((state) => state.words.tags);
 	const error = useAppSelector((state) => state.words.error);
 	const session = useSession();
-
-	const [createNewWord, {}] = wordApi.useCreateNewWordMutation();
 
 	useEffect(() => {
 		!tags.length && dispatch(getAllTags());
@@ -217,32 +210,24 @@ const FormAddWord: React.FC<PropsComponents> = ({ dispatch }) => {
 	);
 };
 
-const ThxForAdded: React.FC<PropsComponents> = ({ dispatch }) => {
+const ThxForAdded: React.FC<TModalForm> = ({ reset }) => {
 	return (
 		<div className={styles.thxForAdded}>
 			<h2>Спасибо за ваш вклад</h2>
 			<span>Ваше слово добавлено!</span>
-			<MainButton
-				type='button'
-				size='big'
-				onClick={() => dispatch(closeModalThx())}
-			>
+			<MainButton type='button' size='big' onClick={() => reset()}>
 				Еще слово
 			</MainButton>
 		</div>
 	);
 };
 
-const ErrorAdded: React.FC<PropsComponents> = ({ dispatch }) => {
+const ErrorAdded: React.FC<TModalForm> = ({ reset }) => {
 	return (
 		<div className={styles.thxForAdded}>
 			<h2>Ошибка добавления!</h2>
 			<span>Кажется такое слово у нас уже есть</span>
-			<MainButton
-				type='button'
-				size='big'
-				onClick={() => dispatch(closeModalThx())}
-			>
+			<MainButton type='button' size='big' onClick={() => reset()}>
 				Попробовать
 			</MainButton>
 		</div>
@@ -251,22 +236,17 @@ const ErrorAdded: React.FC<PropsComponents> = ({ dispatch }) => {
 
 const AddNewWord = () => {
 	const dispatch = useAppDispatch();
-	const wordStatus = useAppSelector((state) => state.words.addWordStatus);
+	const [createNewWord, { isError, isLoading, isSuccess, reset }] =
+		wordApi.useCreateNewWordMutation();
 
-	const renderContent: React.FC<string> = (status) => {
-		switch (status) {
-			case 'loading':
-				return <Loading />;
-			case 'added':
-				return <ThxForAdded dispatch={dispatch} />;
-			case 'error':
-				return <ErrorAdded dispatch={dispatch} />;
-			default:
-				return <FormAddWord dispatch={dispatch} />;
-		}
+	const renderContent = (): JSX.Element => {
+		if (isLoading) return <Loading />;
+		if (isError) return <ErrorAdded reset={reset} />;
+		if (isSuccess) return <ThxForAdded reset={reset} />;
+		return <FormAddWord dispatch={dispatch} createNewWord={createNewWord} />;
 	};
 
-	const content = renderContent(wordStatus);
+	const content = renderContent();
 
 	return (
 		<section className={styles.addSection}>

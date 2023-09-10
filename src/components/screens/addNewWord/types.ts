@@ -1,4 +1,4 @@
-import { ITags } from '@/interfaces/api.interface';
+import { ITags, IWord } from '@/interfaces/api.interface';
 import { AppDispatch } from '@/store/store';
 
 export type Inputs = {
@@ -12,4 +12,12 @@ export type Inputs = {
 
 export type PropsComponents = {
 	dispatch: AppDispatch;
+};
+
+export type TFormAdded = {
+	createNewWord: (IWord: IWord) => void;
+} & PropsComponents;
+
+export type TModalForm = {
+	reset: () => void;
 };

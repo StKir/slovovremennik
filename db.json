@@ -887,6 +887,140 @@
       ],
       "id": "359fef5c-0aef-1cd5-78ae-3afe5b0eb83c",
       "author": "Кирилл Струков"
+    },
+    {
+      "word": "Dsadsadsadasd",
+      "description": "dasdsadsadsad",
+      "example": "asdasdasdsadas",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 8,
+          "name": "Жаргонизмы"
+        }
+      ],
+      "id": "cd3ce246-9f5d-712e-7263-f9b629f175c7",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Sadsadasda",
+      "description": "sdasdasdasdasd",
+      "example": "asdasdsadsadas",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 6,
+          "name": "IT"
+        }
+      ],
+      "id": "1d015f00-6efc-085a-7add-26e203658483",
+      "author": "Кирилл Струков"
+    },
+    {
+      "speech": "Местоимение",
+      "description": "111111111111111",
+      "word": "11111111111111111",
+      "example": "11111111111111111111",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "86a5b4ce-c20e-bda0-479b-71396e9e43f2",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Ddddddddddddddddd",
+      "description": "ddddddddddddddddddddddd",
+      "example": "ddddddddddddddddddddddddddddddd",
+      "speech": "Существительное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "dcb293e7-c572-a4ab-1b8d-bd553c275a23",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Sadsadsad",
+      "description": "asdasdasdasdas",
+      "example": "dasdasdsadsada",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "82510c11-b053-8427-04a2-d487ea5cb1fe",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Jjjjjjjjjjjjjjjjjjjjjjjj",
+      "description": "jjjjjjjjjjjjjjjjjjjjjjjjjj",
+      "example": "jjjjjjjjjjjjjjjjjjjjjj",
+      "speech": "Существительное",
+      "tags": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        }
+      ],
+      "id": "5f731d94-848a-ea5b-6a11-f9cfbca4aa90",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "123213123",
+      "description": "1231231231",
+      "example": "23213123123",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        },
+        {
+          "id": 4,
+          "name": "Культура"
+        }
+      ],
+      "id": "81d49660-8365-0c7f-ee17-f9849af715cb",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Хуйухйухйху",
+      "description": "УХХУХУХУХХУХУХУХ",
+      "example": "ХУХУХУХХУХУХУХУ",
+      "speech": "Прилагательное",
+      "tags": [
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "9ce81f55-42f7-b006-8cc0-f39018685e6e",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Кофе",
+      "description": "Кофе Кофе Кофе Кофе Кофе Кофе ",
+      "example": "Кофе Кофе Кофе Кофе Кофе Кофе Кофе ",
+      "speech": "Существительное",
+      "tags": [
+        {
+          "id": 4,
+          "name": "Культура"
+        },
+        {
+          "id": 3,
+          "name": "Пацанские"
+        }
+      ],
+      "id": "f5220c72-7e9c-386b-3171-3adee661d988",
+      "author": "Кирилл Струков"
     }
   ],
   "tegs": [

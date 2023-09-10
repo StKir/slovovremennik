@@ -27,6 +27,7 @@ import { TErrors } from '@/interfaces/store.interface';
 import { PropsComponents } from '../addNewWord/types';
 import { wordApi } from '@/services/WordServices';
 import Loading from '@/components/ui/loading/Loading';
+import { filteredWord } from '@/services/FilteredWords';
 
 const AllWords = () => {
 	const error = useAppSelector((state) => state.words.error);
@@ -134,6 +135,7 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 const WordList = ({ dispatch }: PropsComponents) => {
 	const page = useAppSelector((state) => state.words.page);
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
+	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const wordSearch = useAppSelector((state) => state.words.searchWord);
 	const { data: words, error, isLoading } = wordApi.useGetAllWordsQuery(page);
 
@@ -142,6 +144,8 @@ const WordList = ({ dispatch }: PropsComponents) => {
 		for (let i = 0; i <= total / 20; i++) arrayPage.push(i);
 		return arrayPage;
 	};
+
+	const dataWords = words && filteredWord(words.apiResponse, selectedTags);
 
 	const pagesPagination = useMemo(
 		() => getArrayPage(words ? words.totalCount : 0),
@@ -174,8 +178,9 @@ const WordList = ({ dispatch }: PropsComponents) => {
 				</h2>
 			) : (
 				<div className={styles.word_list}>
-					{words &&
-						words.apiResponse.map((wordInfo) => (
+					{!dataWords?.length && <h2>Таких слов тут нет</h2>}
+					{dataWords &&
+						dataWords.map((wordInfo) => (
 							<Link key={wordInfo.id} href={`/words/${wordInfo.id}`}>
 								<Words content={wordInfo} showDetails={false} />
 							</Link>
