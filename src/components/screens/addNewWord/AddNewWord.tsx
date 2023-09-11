@@ -7,8 +7,8 @@ import { partSpech } from './constants';
 import MainButton from '@/components/ui/buttons/mainButton/MainButton';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useEffect, useState } from 'react';
-import { getAllTags, searchWord } from '@/store/wordsSlice';
-import { ITags } from '@/interfaces/api.interface';
+import { getAllTags, resetSearchStatus, searchWord } from '@/store/wordsSlice';
+import { ITags, IWord } from '@/interfaces/api.interface';
 import Teg from '@/components/ui/teg';
 import Loading from '@/components/ui/loading/Loading';
 import uuid from 'react-uuid';
@@ -16,7 +16,7 @@ import { Inputs, TFormAdded, TModalForm } from './types';
 import { useSession } from 'next-auth/react';
 import { wordApi } from '@/services/WordServices';
 
-const FormAddWord: React.FC<TFormAdded> = ({ dispatch, createNewWord }) => {
+const FormAddWord: React.FC<TFormAdded> = ({ dispatch, SetWordData }) => {
 	const {
 		handleSubmit,
 		control,
@@ -70,12 +70,12 @@ const FormAddWord: React.FC<TFormAdded> = ({ dispatch, createNewWord }) => {
 
 	const OnSubmit: SubmitHandler<Inputs> = (data) => {
 		if (selectedTags.length) {
+			data.word = data.word[0].toUpperCase() + data.word.slice(1).toLowerCase();
+			dispatch(searchWord(data.word));
 			data.id = uuid();
 			data.tags = selectedTags;
-			data.word = data.word[0].toUpperCase() + data.word.slice(1).toLowerCase();
 			onReset();
-			dispatch(searchWord(data.word));
-			createNewWord({ ...data, author: session.data?.user?.name || 'Аноним' });
+			SetWordData({ ...data, author: session.data?.user?.name || 'Аноним' });
 		} else {
 			setError('tags', { type: 'custom', message: 'Укажите теги' });
 		}
@@ -236,14 +236,28 @@ const ErrorAdded: React.FC<TModalForm> = ({ reset }) => {
 
 const AddNewWord = () => {
 	const dispatch = useAppDispatch();
+	const [wordData, SetWordData] = useState<IWord>();
+	const addStatus = useAppSelector((state) => state.words.addWordStatus);
 	const [createNewWord, { isError, isLoading, isSuccess, reset }] =
 		wordApi.useCreateNewWordMutation();
 
+	useEffect(() => {
+		if (addStatus === 'added' && wordData) {
+			createNewWord(wordData);
+		}
+	}, [wordData, addStatus, createNewWord]);
+
+	const handelReset = () => {
+		reset();
+		dispatch(resetSearchStatus());
+	};
+
 	const renderContent = (): JSX.Element => {
 		if (isLoading) return <Loading />;
-		if (isError) return <ErrorAdded reset={reset} />;
-		if (isSuccess) return <ThxForAdded reset={reset} />;
-		return <FormAddWord dispatch={dispatch} createNewWord={createNewWord} />;
+		if (isError || addStatus === 'error')
+			return <ErrorAdded reset={handelReset} />;
+		if (isSuccess) return <ThxForAdded reset={handelReset} />;
+		return <FormAddWord dispatch={dispatch} SetWordData={SetWordData} />;
 	};
 
 	const content = renderContent();

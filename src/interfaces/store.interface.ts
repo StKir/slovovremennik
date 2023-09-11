@@ -1,7 +1,7 @@
 import { ITags, IWord } from './api.interface';
 
 export type TWords = {
-	searchWord: IWord;
+	searchWord: IWord[];
 	tags: ITags[];
 	LoadingStatus: 'idle' | 'loading' | 'error' | 'start';
 	addWordStatus: 'start' | 'added' | 'error' | 'loading';

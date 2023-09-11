@@ -14,7 +14,6 @@ import {
 } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import {
-	addPage,
 	getAllTags,
 	removeTags,
 	selectTags,
@@ -23,11 +22,11 @@ import {
 } from '@/store/wordsSlice';
 import { ITags } from '@/interfaces/api.interface';
 import Link from 'next/link';
-import { TErrors } from '@/interfaces/store.interface';
-import { PropsComponents } from '../addNewWord/types';
 import { wordApi } from '@/services/WordServices';
 import Loading from '@/components/ui/loading/Loading';
 import { filteredWord } from '@/services/FilteredWords';
+import { TSearchWordProps, TSerach, TTagsFormProps, TWordList } from './types';
+import { PropsComponents } from '../addNewWord/types';
 
 const AllWords = () => {
 	const error = useAppSelector((state) => state.words.error);
@@ -53,21 +52,14 @@ const AllWords = () => {
 						<h3 className={styles.tegs_title}>Теги:</h3>
 						<TagsForm error={error} dispatch={dispatch} />
 						<AllWordsForm onSearch={onSearch} />
-						<WordList dispatch={dispatch} />
+						{/* <WordList dispatch={dispatch} /> */}
+						<WordsListTrue dispatch={dispatch} />
 					</div>
 				</div>
 			</div>
 		</section>
 	);
 };
-
-type TSerach = {
-	onSearch: (e: FormEvent<HTMLFormElement>, word: string) => void;
-};
-
-type TTagsFormProps = {
-	error: TErrors;
-} & PropsComponents;
 
 const TagsForm = ({ error, dispatch }: TTagsFormProps) => {
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
@@ -132,11 +124,29 @@ const AllWordsForm = ({ onSearch }: TSerach) => {
 	);
 };
 
-const WordList = ({ dispatch }: PropsComponents) => {
-	const page = useAppSelector((state) => state.words.page);
+const WordsListTrue = ({ dispatch }: PropsComponents) => {
 	const wordStatusSearch = useAppSelector((state) => state.words.searchStatus);
 	const selectedTags = useAppSelector((state) => state.words.selectedTags);
 	const wordSearch = useAppSelector((state) => state.words.searchWord);
+
+	const seachDataWord = wordSearch && filteredWord(wordSearch, selectedTags);
+
+	return (
+		<>
+			{wordStatusSearch !== 'start' ? (
+				<SearchWordList
+					wordStatusSearch={wordStatusSearch}
+					seachDataWord={seachDataWord}
+				/>
+			) : (
+				<WordList dispatch={dispatch} selectedTags={selectedTags} />
+			)}
+		</>
+	);
+};
+
+const WordList = ({ dispatch, selectedTags }: TWordList) => {
+	const page = useAppSelector((state) => state.words.page);
 	const { data: words, error, isLoading } = wordApi.useGetAllWordsQuery(page);
 
 	const getArrayPage = (total: number) => {
@@ -151,22 +161,6 @@ const WordList = ({ dispatch }: PropsComponents) => {
 		() => getArrayPage(words ? words.totalCount : 0),
 		[words]
 	);
-
-	if (wordStatusSearch === 'end') {
-		return (
-			<Link href={`/words/${wordSearch.id}`}>
-				<Words content={wordSearch} showDetails={false} />
-			</Link>
-		);
-	}
-
-	if (wordStatusSearch === 'error') {
-		return <h2>Такого слова у нас нет</h2>;
-	}
-
-	if (wordStatusSearch === 'loading') {
-		return <Loading />;
-	}
 
 	return (
 		<>
@@ -196,6 +190,28 @@ const WordList = ({ dispatch }: PropsComponents) => {
 					>
 						{i + 1}
 					</MainButton>
+				))}
+			</div>
+		</>
+	);
+};
+
+const SearchWordList = ({
+	wordStatusSearch,
+	seachDataWord
+}: TSearchWordProps) => {
+	if (wordStatusSearch === 'error' || !(seachDataWord && seachDataWord.length))
+		return <h2>Такого слова у нас нет</h2>;
+
+	if (wordStatusSearch === 'loading') return <Loading />;
+
+	return (
+		<>
+			<div className={styles.word_list}>
+				{seachDataWord.map((el) => (
+					<Link key={el.id} href={`/words/${el.id}`}>
+						<Words content={el} showDetails={false} />
+					</Link>
 				))}
 			</div>
 		</>

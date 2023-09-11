@@ -15,7 +15,7 @@ export type PropsComponents = {
 };
 
 export type TFormAdded = {
-	createNewWord: (IWord: IWord) => void;
+	SetWordData: (IWord: IWord) => void;
 } & PropsComponents;
 
 export type TModalForm = {

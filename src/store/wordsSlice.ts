@@ -6,9 +6,8 @@ import {
 	createSelector
 } from '@reduxjs/toolkit';
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-import { RootState, useAppSelector } from './store';
 import { ITags, IWord } from '@/interfaces/api.interface';
 import { TWords } from '@/interfaces/store.interface';
 
@@ -40,15 +39,15 @@ export const searchWord = createAsyncThunk<IWord[], string>(
 	}
 );
 
-export const searchWordbyInput = createAsyncThunk<IWord | 'empty', string>(
+export const searchWordbyInput = createAsyncThunk<IWord[] | 'empty', string>(
 	'words/searchWordbyInput',
 	async (word) => {
 		if (word === '') return 'empty';
 		const res = await axios({
 			method: 'GET',
-			url: `http://localhost:3004/words?word=${word}`
+			url: `http://localhost:3004/words?word_like=${word}`
 		});
-		return res.data[0];
+		return res.data;
 	}
 );
 
@@ -85,6 +84,9 @@ const wordsSlice = createSlice({
 		},
 		setPage: (state, { payload }: PayloadAction<number>) => {
 			state.page = payload;
+		},
+		resetSearchStatus: (state) => {
+			state.addWordStatus = 'start';
 		}
 	},
 	extraReducers: (builder) => {
@@ -108,7 +110,7 @@ const wordsSlice = createSlice({
 				if (payload.length) {
 					state.addWordStatus = 'error';
 				} else {
-					state.addWordStatus = 'start';
+					state.addWordStatus = 'added';
 				}
 			})
 			.addCase(searchWordbyInput.pending, (state) => {
@@ -118,7 +120,7 @@ const wordsSlice = createSlice({
 				if (payload === 'empty') {
 					state.searchStatus = 'start';
 				} else {
-					if (payload) {
+					if (payload.length) {
 						state.searchWord = payload;
 						state.searchStatus = 'end';
 					} else {
@@ -132,37 +134,13 @@ const wordsSlice = createSlice({
 
 const { reducer, actions } = wordsSlice;
 
-// export const filteredWords = createSelector(
-// 	[
-// 		(state) => state.wordsApi.endpoints.getAllWords(),
-// 		(state) => state.words.selectedTags
-// 	],
-// 	(words, selectedTags: ITags[]) => {
-// 		if (!selectedTags.length) return words;
-
-// 		const idArray = selectedTags.map((el) => el.id);
-
-// 		return words.filter((el) => {
-// 			const tagsIdArray = el.tags.map((el) => {
-// 				return el.id;
-// 			});
-// 			return tagsIdArray.some((id) => idArray.includes(id));
-// 		});
-// 	}
-// );
-
-export const filteredWord = (words: IWord[], selectedTags: ITags[]) => {
-	if (!selectedTags.length) return words;
-	const idArray = selectedTags.map((el) => el.id);
-	return words.filter((el) => {
-		const tagsIdArray = el.tags.map((el) => {
-			return el.id;
-		});
-		return tagsIdArray.some((id) => idArray.includes(id));
-	});
-};
-
-export const { closeModalThx, selectTags, removeTags, addPage, setPage } =
-	actions;
+export const {
+	closeModalThx,
+	selectTags,
+	removeTags,
+	addPage,
+	setPage,
+	resetSearchStatus
+} = actions;
 
 export default reducer;

@@ -1021,6 +1021,73 @@
       ],
       "id": "f5220c72-7e9c-386b-3171-3adee661d988",
       "author": "Кирилл Струков"
+    },
+    {
+      "word": "Кофе",
+      "description": "фвфывыфвыфвфывф",
+      "example": "ывфвыфвфывфывф",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 2,
+          "name": "Мода"
+        },
+        {
+          "id": 1,
+          "name": "Сленг"
+        }
+      ],
+      "id": "411a1c12-7ad3-bd23-6502-12306cead5ac",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Фывфыв",
+      "description": "фывфыв",
+      "example": "фывфывфыв",
+      "speech": "Существительное",
+      "tags": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        }
+      ],
+      "id": "f592056b-5e0a-5ae6-58b5-c1f8088c8a24"
+    },
+    {
+      "word": "Worddataworddata",
+      "description": "wordDatawordDatawordData",
+      "example": "wordDatawordDatawordDatawordData",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 8,
+          "name": "Жаргонизмы"
+        },
+        {
+          "id": 6,
+          "name": "IT"
+        }
+      ],
+      "id": "67e0fc08-73b3-f611-2635-b59bcd7f705b",
+      "author": "Кирилл Струков"
+    },
+    {
+      "word": "Hhhhhhhhhhhhhhhh",
+      "description": "hhhhhhhhhhhhhhhhhhhhhhh",
+      "example": "hhhhhhhhhhhhhhhhhhhhhhhhh",
+      "speech": "Местоимение",
+      "tags": [
+        {
+          "id": 1,
+          "name": "Сленг"
+        },
+        {
+          "id": 2,
+          "name": "Мода"
+        }
+      ],
+      "id": "6b110c80-a651-ea28-7cc7-c57bb5536615",
+      "author": "Кирилл Струков"
     }
   ],
   "tegs": [
